@@ -9,6 +9,67 @@ spec:
   - stage: main
 ---
 apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  labels:
+    argocd.argoproj.io/instance: security-cert-manager-kargo
+  name: main
+  namespace: cert-manager
+spec:
+  promotionTemplate:
+    spec:
+      steps:
+      - config:
+          checkout:
+          - branch: main
+            path: ./src
+          repoURL: https://github.com/jeffmccune/kargo-demo.git
+        uses: git-clone
+      - as: update-chart
+        config:
+          path: src/data/cert-manager/cert-manager.yaml
+          updates:
+          - key: CertManager.chart.version
+            value: ${{ chartFrom("https://charts.jetstack.io", warehouse("cert-manager")).Version
+              }}
+        uses: yaml-update
+      - as: commit
+        config:
+          messageFromSteps:
+          - update-chart
+          path: ./src
+        uses: git-commit
+      - config:
+          path: ./src
+          targetBranch: kargo/cert-manager/main
+        uses: git-push
+      - as: open-pr
+        config:
+          repoURL: https://github.com/jeffmccune/kargo-demo.git
+          sourceBranch: kargo/cert-manager/main
+          targetBranch: main
+        uses: git-open-pr
+      - as: merge-pr
+        config:
+          prNumber: ${{ outputs['open-pr'].prNumber }}
+          repoURL: https://github.com/jeffmccune/kargo-demo.git
+        uses: git-wait-for-pr
+      - config:
+          apps:
+          - name: security-cert-manager
+            sources:
+            - desiredRevision: ${{ outputs['merge-pr'].commit }}
+              repoURL: https://github.com/jeffmccune/kargo-demo.git
+              updateTargetRevision: true
+        uses: argocd-update
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: cert-manager
+    sources:
+      direct: true
+---
+apiVersion: kargo.akuity.io/v1alpha1
 kind: Warehouse
 metadata:
   labels:
