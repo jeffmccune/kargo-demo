@@ -49,7 +49,8 @@ Component: #Kubernetes & {
 		}
 
 		let SRC_PATH = "./src"
-		let DATAFILE = path.Join([SRC_PATH, CertManager.datafile])
+		let DATAFILE = path.Join([SRC_PATH, CertManager.datafile], path.Unix)
+		let CHART_URL = path.Join([CertManager.chart.repository.url, CertManager.chart.name], path.Unix)
 		let BRANCH = "kargo/\(Parameters.KargoProjectName)/\(Parameters.KargoStageName)"
 
 		Stage: (STAGE): {
@@ -86,7 +87,7 @@ Component: #Kubernetes & {
 								updates: [{
 									key: "CertManager.chart.version"
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom(\"\(CertManager.chart.repository.url)\", warehouse(\"cert-manager\")).Version }}"
+									value: "${{ chartFrom('\(CHART_URL)', warehouse('cert-manager')).Version }}"
 								}]
 							}
 						},

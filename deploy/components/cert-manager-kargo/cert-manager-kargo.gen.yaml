@@ -31,7 +31,7 @@ spec:
           path: src/data/cert-manager/cert-manager.yaml
           updates:
           - key: CertManager.chart.version
-            value: ${{ chartFrom("https://charts.jetstack.io", warehouse("cert-manager")).Version
+            value: ${{ chartFrom('https:/charts.jetstack.io/cert-manager', warehouse('cert-manager')).Version
               }}
         uses: yaml-update
       - as: commit
