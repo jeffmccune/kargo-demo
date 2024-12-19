@@ -50,7 +50,6 @@ Component: #Kubernetes & {
 
 		let SRC_PATH = "./src"
 		let DATAFILE = path.Join([SRC_PATH, CertManager.datafile], path.Unix)
-		let BRANCH = "kargo/\(Parameters.KargoProjectName)/\(Parameters.KargoStageName)"
 
 		Stage: (STAGE): {
 			metadata: name:      STAGE
@@ -91,6 +90,7 @@ Component: #Kubernetes & {
 							}
 						},
 						{
+							// https://docs.kargo.io/references/promotion-steps#git-commit
 							uses: "git-commit"
 							as:   "commit"
 							config: {
@@ -99,18 +99,21 @@ Component: #Kubernetes & {
 							}
 						},
 						{
+							// https://docs.kargo.io/references/promotion-steps#git-push
 							uses: "git-push"
+							as:   "push"
 							config: {
-								path:         SRC_PATH
-								targetBranch: BRANCH
+								path:                 SRC_PATH
+								generateTargetBranch: true
 							}
 						},
 						{
+							// https://docs.kargo.io/references/promotion-steps#git-open-pr
 							uses: "git-open-pr"
 							as:   "open-pr"
 							config: {
 								repoURL:      Organization.RepoURL
-								sourceBranch: BRANCH
+								sourceBranch: "${{ outputs.push.branch }}"
 								targetBranch: "main"
 							}
 						},

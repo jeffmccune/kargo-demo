@@ -40,14 +40,15 @@ spec:
           - update-chart
           path: ./src
         uses: git-commit
-      - config:
+      - as: push
+        config:
+          generateTargetBranch: true
           path: ./src
-          targetBranch: kargo/cert-manager/main
         uses: git-push
       - as: open-pr
         config:
           repoURL: https://github.com/jeffmccune/kargo-demo.git
-          sourceBranch: kargo/cert-manager/main
+          sourceBranch: ${{ outputs.push.branch }}
           targetBranch: main
         uses: git-open-pr
       - as: merge-pr
