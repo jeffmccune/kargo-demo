@@ -1,6 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
+    annotations:
+        kargo.akuity.io/authorized-stage: cert-manager:main
     labels: {}
     name: security-cert-manager
     namespace: argocd
@@ -9,6 +11,6 @@ spec:
         server: https://kubernetes.default.svc
     project: security
     source:
-        path: deploy/components/cert-manager
+        path: ./
         repoURL: https://github.com/jeffmccune/kargo-demo.git
-        targetRevision: main
+        targetRevision: project/security/component/cert-manager

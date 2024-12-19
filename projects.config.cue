@@ -34,6 +34,8 @@ Projects: holos.#Projects & {
 				name: "cert-manager"
 				path: "projects/security/components/cert-manager"
 				instances: [{extractYAML: path: "./data/cert-manager/cert-manager.yaml"}]
+				parameters: KargoProjectName: "cert-manager"
+				parameters: KargoStageName:   "main"
 			}
 			// Defines the Kargo promotion pipeline for cert-manager.
 			"cert-manager-kargo": {
