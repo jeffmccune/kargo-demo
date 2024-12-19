@@ -50,7 +50,7 @@ Component: #Kubernetes & {
 
 		let SRC_PATH = "./src"
 		let DATAFILE = path.Join([SRC_PATH, CertManager.datafile], path.Unix)
-		let CHART_URL = path.Join([CertManager.chart.repository.url, CertManager.chart.name], path.Unix)
+		let CHART_URL = "\(CertManager.chart.repository.url)/\(CertManager.chart.name)"
 		let BRANCH = "kargo/\(Parameters.KargoProjectName)/\(Parameters.KargoStageName)"
 
 		Stage: (STAGE): {
