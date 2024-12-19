@@ -13,7 +13,9 @@ Component: #Kubernetes & {
 		// The project is the same as the namespace, we adopt the namespace with the
 		// kargo.akuity.io/project: "true" label, configured by the namespaces
 		// component.
-		Project: (CertManager.namespace): _
+		Project: (CertManager.namespace): spec: promotionPolicies: [{
+			stage: "main"
+		}]
 
 		Warehouse: "cert-manager": {
 			metadata: name:      "cert-manager"
