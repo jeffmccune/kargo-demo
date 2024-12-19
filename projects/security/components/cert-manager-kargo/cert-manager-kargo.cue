@@ -110,7 +110,7 @@ Component: #Kubernetes & {
 						{
 							// https://docs.kargo.io/references/promotion-steps#git-open-pr
 							uses: "git-open-pr"
-							as:   "open-pr"
+							as:   "pull"
 							config: {
 								repoURL:      Organization.RepoURL
 								sourceBranch: "${{ outputs.push.branch }}"
@@ -122,7 +122,7 @@ Component: #Kubernetes & {
 							as:   "merge-pr"
 							config: {
 								repoURL:  Organization.RepoURL
-								prNumber: "${{ outputs['open-pr'].prNumber }}"
+								prNumber: "${{ outputs.pull.prNumber }}"
 							}
 						},
 						{
