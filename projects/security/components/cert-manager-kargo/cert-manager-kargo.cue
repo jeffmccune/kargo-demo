@@ -23,7 +23,8 @@ Component: #Kubernetes & {
 		// kargo.akuity.io/project: "true" label, configured by the namespaces
 		// component.
 		Project: (CertManager.namespace): spec: promotionPolicies: [{
-			stage: STAGE
+			stage:                STAGE
+			autoPromotionEnabled: true
 		}]
 
 		Warehouse: "cert-manager": {

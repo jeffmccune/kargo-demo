@@ -6,7 +6,8 @@ metadata:
   name: cert-manager
 spec:
   promotionPolicies:
-  - stage: main
+  - autoPromotionEnabled: true
+    stage: main
 ---
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
