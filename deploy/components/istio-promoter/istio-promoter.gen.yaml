@@ -1,0 +1,74 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  labels:
+    argocd.argoproj.io/instance: network-istio-promoter
+  name: istio
+spec:
+  promotionPolicies:
+  - autoPromotionEnabled: true
+    stage: main
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  labels:
+    argocd.argoproj.io/instance: network-istio-promoter
+  name: main
+  namespace: istio
+spec:
+  promotionTemplate:
+    spec:
+      steps:
+      - config:
+          checkout:
+          - branch: main
+            path: ./src
+          repoURL: https://github.com/jeffmccune/kargo-demo.git
+        uses: git-clone
+      - as: update
+        config:
+          path: src/data/istio/istio.yaml
+          updates:
+          - key: Istio.chart.version
+            value: ${{ chartFrom('https://istio-release.storage.googleapis.com/charts',
+              'base', warehouse('istio')).Version }}
+        uses: yaml-update
+      - as: commit
+        config:
+          message: 'istio: update to ${{ chartFrom(''https://istio-release.storage.googleapis.com/charts'',
+            ''base'', warehouse(''istio'')).Version }}'
+          path: ./src
+        uses: git-commit
+      - as: push
+        config:
+          generateTargetBranch: true
+          path: ./src
+        uses: git-push
+      - as: pull
+        config:
+          repoURL: https://github.com/jeffmccune/kargo-demo.git
+          sourceBranch: ${{ outputs.push.branch }}
+          targetBranch: main
+        uses: git-open-pr
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: istio
+    sources:
+      direct: true
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  labels:
+    argocd.argoproj.io/instance: network-istio-promoter
+  name: istio
+  namespace: istio
+spec:
+  freightCreationPolicy: Automatic
+  interval: 5m0s
+  subscriptions:
+  - chart:
+      name: base
+      repoURL: https://istio-release.storage.googleapis.com/charts
