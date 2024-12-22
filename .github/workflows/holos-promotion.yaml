@@ -10,7 +10,7 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v4
-      - uses: holos-run/holos-action@v0
+      - uses: holos-run/holos-action@v1
         with:
           command: holos render platform --inject=${{ github.repository_owner }}
       - name: Commit and push changes
