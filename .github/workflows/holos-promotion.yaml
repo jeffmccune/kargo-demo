@@ -12,9 +12,9 @@ jobs:
     #   image: quay.io/holos-run/holos:bookworm
     steps:
       - uses: actions/checkout@v4
-      - name: Run holos render platform
-        run: |
-          docker run -v "$(pwd):/app" -w /app quay.io/holos-run/holos:v0.102.0-5-g766c4687 holos render platform -t ${{ github.repository_owner }}
+      - uses: holos-run/holos-action@v0
+        with:
+          build-tags:  ${{ github.repository_owner }}
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions'
