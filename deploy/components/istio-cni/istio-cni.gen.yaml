@@ -3,7 +3,13 @@ kind: ServiceAccount
 metadata:
   labels:
     app: istio-cni
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     operator.istio.io/component: Cni
@@ -16,7 +22,13 @@ kind: ClusterRole
 metadata:
   labels:
     app: istio-cni
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     operator.istio.io/component: Cni
@@ -39,7 +51,13 @@ kind: ClusterRole
 metadata:
   labels:
     app: istio-cni
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     operator.istio.io/component: Cni
@@ -59,7 +77,13 @@ kind: ClusterRole
 metadata:
   labels:
     app: istio-cni
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     operator.istio.io/component: Cni
@@ -87,7 +111,13 @@ kind: ClusterRoleBinding
 metadata:
   labels:
     app: istio-cni
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     operator.istio.io/component: Cni
@@ -106,7 +136,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     k8s-app: istio-cni-repair
@@ -126,7 +162,13 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   labels:
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     k8s-app: istio-cni-repair
@@ -148,8 +190,7 @@ data:
   AMBIENT_ENABLED: "true"
   AMBIENT_IPV6: "true"
   CHAINED_CNI_PLUGIN: "true"
-  CNI_NET_DIR: /var/lib/rancher/k3s/agent/etc/cni/net.d
-  CURRENT_AGENT_VERSION: 1.23.1
+  CURRENT_AGENT_VERSION: 1.24.2
   EXCLUDED_NAMESPACES: kube-system
   REPAIR_BROKEN_POD_LABEL_KEY: cni.istio.io/uninitialized
   REPAIR_BROKEN_POD_LABEL_VALUE: "true"
@@ -162,7 +203,13 @@ kind: ConfigMap
 metadata:
   labels:
     app: istio-cni
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     operator.istio.io/component: Cni
@@ -174,7 +221,13 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
+    app.kubernetes.io/instance: cni
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: istio-cni
+    app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-cni
+    helm.sh/chart: cni-1.24.2
     install.operator.istio.io/owning-resource: unknown
     istio.io/rev: default
     k8s-app: istio-cni-node
@@ -189,11 +242,18 @@ spec:
   template:
     metadata:
       annotations:
+        container.apparmor.security.beta.kubernetes.io/install-cni: unconfined
         prometheus.io/path: /metrics
         prometheus.io/port: "15014"
         prometheus.io/scrape: "true"
         sidecar.istio.io/inject: "false"
       labels:
+        app.kubernetes.io/instance: cni
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: istio-cni
+        app.kubernetes.io/part-of: istio
+        app.kubernetes.io/version: 1.24.2
+        helm.sh/chart: cni-1.24.2
         istio.io/dataplane-mode: none
         k8s-app: istio-cni-node
         sidecar.istio.io/inject: "false"
@@ -236,8 +296,12 @@ spec:
         envFrom:
         - configMapRef:
             name: istio-cni-config
-        image: docker.io/istio/install-cni:1.23.1-distroless
+        image: docker.io/istio/install-cni:1.24.2-distroless
         name: install-cni
+        ports:
+        - containerPort: 15014
+          name: metrics
+          protocol: TCP
         readinessProbe:
           httpGet:
             path: /readyz
@@ -251,10 +315,12 @@ spec:
             add:
             - NET_ADMIN
             - NET_RAW
+            - SYS_PTRACE
             - SYS_ADMIN
+            - DAC_OVERRIDE
             drop:
             - ALL
-          privileged: true
+          privileged: false
           runAsGroup: 0
           runAsNonRoot: false
           runAsUser: 0
@@ -273,6 +339,7 @@ spec:
           name: cni-netns-dir
         - mountPath: /var/run/ztunnel
           name: cni-ztunnel-sock-dir
+      dnsPolicy: ClusterFirstWithHostNet
       hostNetwork: true
       nodeSelector:
         kubernetes.io/os: linux
