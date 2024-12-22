@@ -11,9 +11,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: holos-run/holos-action@v0
+        env:
+          FOO: bar
+          BAZ: one
+          TEST: not passed
         with:
-          env: '{"FOO":"bar","BAZ":"one"}'
           command: holos render platform --inject=${{ github.repository_owner }}
+          flags: --env FOO --env BAZ
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions'
