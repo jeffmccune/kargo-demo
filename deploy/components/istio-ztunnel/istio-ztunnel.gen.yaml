@@ -2,9 +2,13 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   labels:
+    app.kubernetes.io/instance: ztunnel
+    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ztunnel
     app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-ztunnel
+    helm.sh/chart: ztunnel-1.24.2
   name: ztunnel
   namespace: istio-system
 ---
@@ -12,9 +16,13 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
+    app.kubernetes.io/instance: ztunnel
+    app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: ztunnel
     app.kubernetes.io/part-of: istio
+    app.kubernetes.io/version: 1.24.2
     argocd.argoproj.io/instance: network-istio-ztunnel
+    helm.sh/chart: ztunnel-1.24.2
   name: ztunnel
   namespace: istio-system
 spec:
@@ -29,6 +37,12 @@ spec:
         sidecar.istio.io/inject: "false"
       labels:
         app: ztunnel
+        app.kubernetes.io/instance: ztunnel
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: ztunnel
+        app.kubernetes.io/part-of: istio
+        app.kubernetes.io/version: 1.24.2
+        helm.sh/chart: ztunnel-1.24.2
         istio.io/dataplane-mode: none
         sidecar.istio.io/inject: "false"
     spec:
@@ -73,7 +87,7 @@ spec:
               fieldPath: spec.serviceAccountName
         - name: ISTIO_META_ENABLE_HBONE
           value: "true"
-        image: docker.io/istio/ztunnel:1.23.1-distroless
+        image: docker.io/istio/ztunnel:1.24.2-distroless
         name: istio-proxy
         ports:
         - containerPort: 15020
@@ -88,7 +102,7 @@ spec:
             cpu: 200m
             memory: 512Mi
         securityContext:
-          allowPrivilegeEscalation: false
+          allowPrivilegeEscalation: true
           capabilities:
             add:
             - NET_ADMIN
