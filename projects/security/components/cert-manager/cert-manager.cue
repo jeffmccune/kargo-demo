@@ -1,12 +1,14 @@
 package holos
 
+import "example.com/platform/config/certmanager"
+
 // Produce a helm chart build plan.
 holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "cert-manager"
-	Namespace: CertManager.namespace
-	Chart:     CertManager.chart
+	Namespace: certmanager.Config.namespace
+	Chart:     certmanager.Config.chart
 
 	EnableHooks: true
 

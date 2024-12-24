@@ -1,6 +1,9 @@
 package holos
 
-import "path"
+import (
+	"path"
+	"example.com/platform/config/certmanager"
+)
 
 Parameters: {
 	KargoProjectName: string @tag(KargoProjectName)
@@ -22,14 +25,14 @@ Component: #Kubernetes & {
 		// The project is the same as the namespace, we adopt the namespace with the
 		// kargo.akuity.io/project: "true" label, configured by the namespaces
 		// component.
-		Project: (CertManager.namespace): spec: promotionPolicies: [{
+		Project: (certmanager.Config.namespace): spec: promotionPolicies: [{
 			stage:                STAGE
 			autoPromotionEnabled: true
 		}]
 
 		Warehouse: "cert-manager": {
 			metadata: name:      "cert-manager"
-			metadata: namespace: CertManager.namespace
+			metadata: namespace: certmanager.Config.namespace
 			spec: {
 				// implicit value is Automatic
 				freightCreationPolicy: "Automatic"
@@ -41,19 +44,19 @@ Component: #Kubernetes & {
 						// because the pipeline submits a pull request that must be manually
 						// reviewed and approved.  The purpose is to automate the process of
 						// showing the platform engineer what will change.
-						name:    CertManager.chart.name
-						repoURL: CertManager.chart.repository.url
+						name:    certmanager.Config.chart.name
+						repoURL: certmanager.Config.chart.repository.url
 					}
 				}]
 			}
 		}
 
 		let SRC_PATH = "./src"
-		let DATAFILE = path.Join([SRC_PATH, CertManager.datafile], path.Unix)
+		let DATAFILE = path.Join([SRC_PATH, certmanager.Config.datafile], path.Unix)
 
 		Stage: (STAGE): {
 			metadata: name:      STAGE
-			metadata: namespace: CertManager.namespace
+			metadata: namespace: certmanager.Config.namespace
 			spec: {
 				requestedFreight: [{
 					origin: {
@@ -83,9 +86,9 @@ Component: #Kubernetes & {
 							config: {
 								path: DATAFILE
 								updates: [{
-									key: "CertManager.chart.version"
+									key: "chart.version"
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom('\(CertManager.chart.repository.url)', '\(CertManager.chart.name)', warehouse('cert-manager')).Version }}"
+									value: "${{ chartFrom('\(certmanager.Config.chart.repository.url)', '\(certmanager.Config.chart.name)', warehouse('cert-manager')).Version }}"
 								}]
 							}
 						},
@@ -95,7 +98,7 @@ Component: #Kubernetes & {
 							as:   "commit"
 							config: {
 								path:    SRC_PATH
-								message: "cert-manager: update to ${{ chartFrom('\(CertManager.chart.repository.url)', '\(CertManager.chart.name)', warehouse('cert-manager')).Version }}"
+								message: "cert-manager: update to ${{ chartFrom('\(certmanager.Config.chart.repository.url)', '\(certmanager.Config.chart.name)', warehouse('cert-manager')).Version }}"
 							}
 						},
 						{

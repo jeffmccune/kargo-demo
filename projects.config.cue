@@ -1,6 +1,9 @@
 package holos
 
-import "example.com/platform/schemas/platform"
+import (
+	"example.com/platform/config/certmanager"
+	"example.com/platform/schemas/platform"
+)
 
 ProjectName: string | *"no-project" @tag(ProjectName)
 
@@ -15,7 +18,7 @@ Projects: platform.#Projects & {
 	security: {
 		namespaces: {
 			"external-secrets": _
-			(CertManager.namespace): metadata: labels: "kargo.akuity.io/project": "true"
+			(certmanager.Config.namespace): metadata: labels: "kargo.akuity.io/project": "true"
 		}
 		components: {
 			"namespaces": {
@@ -33,7 +36,6 @@ Projects: platform.#Projects & {
 			"cert-manager": {
 				name: "cert-manager"
 				path: "projects/security/components/cert-manager"
-				instances: [{extractYAML: path: CertManager.datafile}]
 				parameters: KargoProjectName: "cert-manager"
 				parameters: KargoStageName:   "main"
 			}

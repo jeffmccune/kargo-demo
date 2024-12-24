@@ -28,9 +28,9 @@ spec:
         uses: git-clone
       - as: update
         config:
-          path: src/data/cert-manager/cert-manager.yaml
+          path: src/config/certmanager/cert-manager.yaml
           updates:
-          - key: CertManager.chart.version
+          - key: chart.version
             value: ${{ chartFrom('https://charts.jetstack.io', 'cert-manager', warehouse('cert-manager')).Version
               }}
         uses: yaml-update
