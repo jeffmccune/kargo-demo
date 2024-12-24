@@ -1,4 +1,4 @@
-package v1alpha5
+package platform
 
 import (
 	v1 "gateway.networking.k8s.io/httproute/v1"

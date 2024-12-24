@@ -1,11 +1,13 @@
 package holos
 
+import "example.com/platform/config/istio"
+
 // Produce a kubernetes objects build plan.
 holos: Component.BuildPlan
 
 Component: #Kubernetes & {
 	Name:      "istio-gateway"
-	Namespace: Istio.Gateway.Namespace
+	Namespace: istio.Config.Gateway.Namespace
 
 	Resources: {
 		// The default gateway with all listeners attached to tls certs.

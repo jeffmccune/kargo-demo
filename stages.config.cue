@@ -1,11 +1,11 @@
 package holos
 
-import holos "example.com/platform/schemas/holos/v1alpha5"
+import "example.com/platform/schemas/platform"
 
 // Injected from Platform.spec.components.parameters.StageName
 StageName: string | *"dev" @tag(StageName)
 
-Stages: holos.#Stages & {
+Stages: platform.#Stages & {
 	let NONPROD = {
 		tier: "nonprod"
 	}

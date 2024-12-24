@@ -1,11 +1,11 @@
 package holos
 
-import holos "example.com/platform/schemas/holos/v1alpha5"
+import "example.com/platform/schemas/platform"
 
 // Namespaces represents all managed namespaces across the platform.  Mix
 // namespaces into this structure to manage them automatically from the
 // namespaces component.
-Namespaces: holos.#Namespaces
+Namespaces: platform.#Namespaces
 
 for PROJECT in Projects {
 	Namespaces: PROJECT.namespaces

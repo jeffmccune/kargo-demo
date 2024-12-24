@@ -1,4 +1,4 @@
-package v1alpha5
+package platform
 
 import core "k8s.io/api/core/v1"
 

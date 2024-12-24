@@ -28,9 +28,9 @@ spec:
         uses: git-clone
       - as: update
         config:
-          path: src/data/istio/istio.yaml
+          path: src/config/istio/istio.yaml
           updates:
-          - key: Istio.chart.version
+          - key: chart.version
             value: ${{ chartFrom('https://istio-release.storage.googleapis.com/charts',
               'base', warehouse('istio')).Version }}
         uses: yaml-update

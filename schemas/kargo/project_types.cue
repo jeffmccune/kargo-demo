@@ -1,7 +1,7 @@
 package kargo
 
 import (
-	holos "example.com/platform/schemas/holos/v1alpha5"
+	"example.com/platform/schemas/platform"
 	stage "kargo.akuity.io/stage/v1alpha1"
 )
 
@@ -33,10 +33,10 @@ import (
 	name:  #Name
 	#Name: string
 
-	stages: holos.#Stages
+	stages: platform.#Stages
 
 	// promotions maps the promotable component names to pipeline stages.
-	promotions: [holos.#Component.#Name]: {
+	promotions: [platform.#Component.#Name]: {
 		requestedFreight: stage.#StageSpec.requestedFreight
 	}
 
@@ -47,7 +47,7 @@ import (
 	}]
 
 	// Compose the holos Project into the kargo project.
-	HolosProject: holos.#Project
+	HolosProject: platform.#Project
 }
 
 // ProjectBuilder expands components out across the provided stages and
@@ -56,14 +56,14 @@ import (
 #ProjectBuilder: {
 	Name: string | *"default"
 	// Stages to manage resources within.
-	Stages: holos.#Stages
+	Stages: platform.#Stages
 	// Namespaces to manage in each Stage.
 	Namespaces: [NAME=string]: {
 		name: NAME
 		metadata: labels: [string]: string
 	}
 	// Components to manage in each Stage.
-	Components: holos.#Components
+	Components: platform.#Components
 
 	// Project represents the built kargo project.
 	Project: #Project & {

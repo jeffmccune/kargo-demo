@@ -1,4 +1,4 @@
-package v1alpha5
+package platform
 
 import "github.com/holos-run/holos/api/core/v1alpha5:core"
 
