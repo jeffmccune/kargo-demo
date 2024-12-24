@@ -1,4 +1,4 @@
-package v1alpha5
+package platform
 
 #Organization: {
 	DisplayName: string

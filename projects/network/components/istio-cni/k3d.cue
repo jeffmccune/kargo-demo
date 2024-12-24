@@ -6,7 +6,7 @@ package holos
 // CNI configuration and binaries.
 // 
 // See https://istio.io/latest/docs/ambient/install/platform-prerequisites/#k3d
-Istio: Values: cni: {
+Component: Values: cni: {
 	cniConfDir: "/var/lib/rancher/k3s/agent/etc/cni/net.d"
 	cniBinDir:  "/bin"
 }

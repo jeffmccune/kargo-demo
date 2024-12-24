@@ -1,4 +1,4 @@
-package v1alpha5
+package platform
 
 // #Stage represents a deployment stage, often called an environment.  Examples
 // are dev, test, uat, prod-east, prod-west.
