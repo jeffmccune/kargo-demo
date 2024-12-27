@@ -73,8 +73,7 @@ import (
 		for STAGE in stages {
 			for COMPONENT in Components {
 				let PARAMS = {
-					Component: COMPONENT.name
-					Prior:     STAGE.prior
+					Prior: STAGE.prior
 					Warehouse: name: COMPONENT.name
 				}
 				promotions: (STAGE.name): requestedFreight: (#StageSpecBuilder & PARAMS).spec.requestedFreight
