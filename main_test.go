@@ -16,7 +16,18 @@ func TestMain(m *testing.M) {
 }
 
 func TestUnity(t *testing.T) {
-	testscript.Run(t, params(filepath.Join("tests", "unity")))
+	testscript.Run(t, useDemoCodeUsersUse(filepath.Join("tests", "unity")))
+}
+
+func useDemoCodeUsersUse(dir string) testscript.Params {
+	p := params(dir)
+	p.RequireUniqueNames = false
+	wd, err := os.Getwd()
+	if err != nil {
+		panic(err)
+	}
+	p.WorkdirRoot = wd
+	return p
 }
 
 func params(dir string) testscript.Params {
