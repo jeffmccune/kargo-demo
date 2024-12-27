@@ -7,11 +7,14 @@ import (
 
 	"github.com/holos-run/holos/cmd"
 	"github.com/rogpeppe/go-internal/testscript"
+
+	cue "cuelang.org/go/cmd/cue/cmd"
 )
 
 func TestMain(m *testing.M) {
 	os.Exit(testscript.RunMain(m, map[string]func() int{
 		"holos": cmd.MakeMain(),
+		"cue":   cue.Main,
 	}))
 }
 
