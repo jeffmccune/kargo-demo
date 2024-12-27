@@ -3,7 +3,7 @@ module github.com/holos-run/kargo-demo
 go 1.23.3
 
 require (
-	github.com/holos-run/holos v0.101.8
+	github.com/holos-run/holos v0.102.1
 	github.com/rogpeppe/go-internal v1.13.1
 )
 
@@ -15,7 +15,7 @@ require (
 	connectrpc.com/otelconnect v0.7.0 // indirect
 	connectrpc.com/validate v0.1.0 // indirect
 	cuelabs.dev/go/oci/ociregistry v0.0.0-20240906074133-82eb438dd565 // indirect
-	cuelang.org/go v0.11.0 // indirect
+	cuelang.org/go v0.11.1 // indirect
 	dario.cat/mergo v1.0.1 // indirect
 	entgo.io/ent v0.13.1 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24 // indirect
@@ -160,7 +160,6 @@ require (
 	go.opentelemetry.io/otel v1.28.0 // indirect
 	go.opentelemetry.io/otel/metric v1.28.0 // indirect
 	go.opentelemetry.io/otel/trace v1.28.0 // indirect
-	go.starlark.net v0.0.0-20230525235612-a134d8f9ddca // indirect
 	golang.org/x/crypto v0.28.0 // indirect
 	golang.org/x/exp v0.0.0-20240613232115-7f521ea00fb8 // indirect
 	golang.org/x/mod v0.21.0 // indirect
@@ -202,8 +201,8 @@ require (
 	modernc.org/token v1.1.0 // indirect
 	oras.land/oras-go v1.2.5 // indirect
 	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
-	sigs.k8s.io/kustomize/api v0.17.2 // indirect
-	sigs.k8s.io/kustomize/kyaml v0.17.1 // indirect
+	sigs.k8s.io/kustomize/api v0.18.0 // indirect
+	sigs.k8s.io/kustomize/kyaml v0.18.1 // indirect
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 	sigs.k8s.io/yaml v1.4.0 // indirect
 )

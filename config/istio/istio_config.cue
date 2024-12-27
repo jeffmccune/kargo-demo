@@ -78,6 +78,7 @@ ProjectBuilder: platform.#ProjectBuilder & {
 			"httproutes": {
 				name: "httproutes"
 				path: "projects/network/components/httproutes"
+				labels: component: "httproutes"
 			}
 		}
 	}

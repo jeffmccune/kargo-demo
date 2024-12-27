@@ -6,10 +6,7 @@ cd "$TOPLEVEL"
 
 set -xeuo pipefail
 
-# this should work
-export CUE_EXPERIMENT=evalv3=0
-holos show buildplans
+# We want to test against the same code users are using as a reference.
+export HOLOS_WORKDIR_ROOT="${TOPLEVEL}"
 
-# this should also work but probably does not
-export CUE_EXPERIMENT=evalv3=1
-holos show buildplans
+go test
