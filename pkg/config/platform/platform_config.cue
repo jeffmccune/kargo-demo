@@ -41,6 +41,10 @@ stacks: #Stacks & {
 					path: "stacks/argocd/components/argocd"
 					annotations: description: "argocd controller services"
 				}
+				"app-projects": {
+					path: "stacks/argocd/components/app-projects"
+					annotations: description: "manage argocd AppProject resources for each stack"
+				}
 			}
 		}
 	}).stack
