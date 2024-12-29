@@ -33,9 +33,12 @@ import (
 // work together.
 #Stack: {
 	metadata: name: #Name
+	// components for Platform.spec.components
 	components: #Components
-	namespaces: #Namespaces
-	httpRoutes: #HTTPRoutes
+	// optional namespaces for the namespaces component
+	namespaces?: #Namespaces
+	// optional httproutes for the httproutes component
+	httpRoutes?: #HTTPRoutes
 }
 
 // #Stacks represents a collection of software stacks organized by name.
