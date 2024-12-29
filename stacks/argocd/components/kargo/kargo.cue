@@ -1,17 +1,20 @@
 package holos
 
-import rg "gateway.networking.k8s.io/referencegrant/v1beta1"
+import (
+	rg "gateway.networking.k8s.io/referencegrant/v1beta1"
+	"example.com/holos/pkg/config/kargo"
+)
 
 // Produce a helm chart build plan.
 holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "kargo"
-	Namespace: Kargo.Namespace
+	Namespace: kargo.config.namespace
 
 	Chart: {
 		name:    "oci://ghcr.io/akuity/kargo-charts/kargo"
-		version: Kargo.Version
+		version: kargo.config.version
 		release: Name
 	}
 	EnableHooks: true
@@ -33,5 +36,5 @@ Component: #Helm & {
 		}]
 	}
 
-	Values: Kargo.Values
+	Values: kargo.config.values
 }

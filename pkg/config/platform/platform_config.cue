@@ -55,6 +55,10 @@ stacks: #Stacks & {
 					path: "stacks/argocd/components/kargo-secrets"
 					annotations: description: "kargo github app credentials"
 				}
+				"kargo": {
+					path: "stacks/argocd/components/kargo"
+					annotations: description: "kargo controllers and crds"
+				}
 			}
 		}
 	}).stack
