@@ -44,7 +44,9 @@ stacks: #Stacks & {
 
 				// configure output manifests to stacks/foo/components/bar/bar.gen.yaml
 				// for component bar.
-				parameters: outputBaseDir: "stacks/\(metadata.name)"
+				// TODO(jeff): uncomment to desired per-stack location after domain
+				// model refactor completes.
+				// parameters: outputBaseDir: "stacks/\(metadata.name)"
 			}
 		}
 	}
