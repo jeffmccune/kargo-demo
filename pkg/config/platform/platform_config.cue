@@ -9,6 +9,12 @@ stacks: #Stacks & {
 	argocd: (#StackBuilder & {
 		parameters: {
 			name: "argocd"
+			components: {
+				"argocd-crds": {
+					path: "stacks/argocd/components/argocd-crds"
+					annotations: description: "argocd custom resource definitions"
+				}
+			}
 		}
 		stack: namespaces: argocd: _
 	}).stack
@@ -41,6 +47,7 @@ stacks: #Stacks & {
 		for KEY, COMPONENT in parameters.components {
 			components: "stacks:\(metadata.name):components:\(KEY)": COMPONENT & {
 				name: KEY
+				labels: "holos.run/stack.name": stack.metadata.name
 
 				// configure output manifests to stacks/foo/components/bar/bar.gen.yaml
 				// for component bar.
