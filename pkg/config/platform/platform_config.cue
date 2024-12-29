@@ -76,15 +76,16 @@ stacks: #Stacks & {
 					path: "stacks/network/components/gateway-api"
 					annotations: description: "gateway api custom resource definitions"
 				}
+
 				"istio-base": {
 					path: "stacks/network/components/istio-base"
 					annotations: description: "istio base resources"
 				}
-
-				// "istiod": {
-				// 	name: "istiod"
-				// 	path: "projects/network/components/istiod"
-				// }
+				"istiod": {
+					name: "istiod"
+					path: "stacks/network/components/istiod"
+					annotations: description: "istiod controller service"
+				}
 				// "istio-cni": {
 				// 	name: "istio-cni"
 				// 	path: "projects/network/components/istio-cni"

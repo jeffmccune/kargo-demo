@@ -3,7 +3,8 @@ package holos
 import (
 	"encoding/yaml"
 	ks "sigs.k8s.io/kustomize/api/types"
-	"example.com/platform/config/istio"
+
+	"example.com/holos/pkg/config/istio"
 )
 
 // Produce a helm chart build plan.
@@ -11,10 +12,10 @@ holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "istiod"
-	Namespace: istio.Config.System.Namespace
+	Namespace: istio.config.system.namespace
 
 	Chart: {
-		version: istio.Config.Version
+		version: istio.config.version
 		repository: {
 			name: "istio"
 			url:  "https://istio-release.storage.googleapis.com/charts"
@@ -23,7 +24,7 @@ Component: #Helm & {
 
 	KustomizeConfig: Kustomization: patches: [for x in KustomizePatches {x}]
 
-	Values: istio.Config.Values
+	Values: istio.config.values
 }
 
 #KustomizePatches: [ArbitraryLabel=string]: ks.#Patch
