@@ -1,22 +1,22 @@
 package holos
 
-import "example.com/platform/config/istio"
+import "example.com/holos/pkg/config/istio"
 
 // Produce a helm chart build plan.
 holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "istio-ztunnel"
-	Namespace: istio.Config.System.Namespace
+	Namespace: istio.config.system.namespace
 
 	Chart: {
 		name:    "ztunnel"
-		version: istio.Config.Version
+		version: istio.config.version
 		repository: {
 			name: "istio"
 			url:  "https://istio-release.storage.googleapis.com/charts"
 		}
 	}
 
-	Values: istio.Config.Values
+	Values: istio.config.values
 }

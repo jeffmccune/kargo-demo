@@ -94,10 +94,11 @@ stacks: #Stacks & {
 					path: "stacks/network/components/istio-cni"
 					annotations: description: "istio cni"
 				}
-				// "istio-ztunnel": {
-				// 	name: "istio-ztunnel"
-				// 	path: "projects/network/components/istio-ztunnel"
-				// }
+				"istio-ztunnel": {
+					name: "istio-ztunnel"
+					path: "stacks/network/components/istio-ztunnel"
+					annotations: description: "istio ztunnel for ambient mode"
+				}
 				// "istio-gateway": {
 				// 	name: "istio-gateway"
 				// 	path: "projects/network/components/istio-gateway"
