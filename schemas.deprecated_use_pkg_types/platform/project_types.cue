@@ -1,12 +1,15 @@
 package platform
 
-import "github.com/holos-run/holos/api/core/v1alpha5:core"
+import (
+	"github.com/holos-run/holos/api/core/v1alpha5:core"
+)
 
 // #Project represents a collection of related components.
 #Project: {
 	name:       string
 	components: #Components
 	namespaces: #Namespaces
+	httpRoutes: #HTTPRoutes
 }
 
 // #Projects represents a collection of #Project values organized by name.

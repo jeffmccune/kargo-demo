@@ -30,9 +30,9 @@ Config: istio.#Config & {
 	Values: profile: "ambient"
 }
 
-// Project represents how istio integrates with the platform.  Dependencies are
-// injected as fields, the Project field contains the value assembled from the
-// dependencies.
+// ProjectBuilder represents how istio integrates with the platform.
+// Dependencies are injected as fields, the Project field contains the value
+// assembled from the dependencies.
 ProjectBuilder: platform.#ProjectBuilder & {
 	organization: _
 

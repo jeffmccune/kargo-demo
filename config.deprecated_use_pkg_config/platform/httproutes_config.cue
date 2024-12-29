@@ -1,35 +1,29 @@
-package holos
+package platform
 
 import (
+	// core types
 	v1 "gateway.networking.k8s.io/httproute/v1"
+	// our types
+	"example.com/platform/schemas/platform"
+	// our config
 	"example.com/platform/config/istio"
 )
 
 // HTTPRoutes is where routes are registered.  The httproutes component manages
 // routes by composing this struct into a BuildPlan.
-HTTPRoutes: #HTTPRoutes
-
-// #HTTPRoutes defines the schema of managed HTTPRoute resources for the
-// platform.
-#HTTPRoutes: {
-	// For the guides, we simplify this down to a flat namespace.
-	[Name=string]: v1.#HTTPRoute & {
-		let HOST = Name + "." + Organization.Domain
-
-		_backendRefs: [NAME=string]: {
-			name:      string | *NAME
-			namespace: string
-			port:      number | *80
-		}
-
-		metadata: name:      Name
+HTTPRoutes: platform.#HTTPRoutes & {
+	[NAME=string]: {
+		metadata: name:      NAME
 		metadata: namespace: istio.Config.Gateway.Namespace
-		metadata: labels: app: Name
+		metadata: labels: app: NAME
+
+		let HOST = NAME + "." + Organization.Domain
 		spec: hostnames: [HOST]
 		spec: parentRefs: [{
 			name:      "default"
 			namespace: metadata.namespace
 		}]
+
 		spec: rules: [
 			{
 				matches: [{path: {type: "PathPrefix", value: "/"}}]
