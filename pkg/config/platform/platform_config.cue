@@ -23,10 +23,33 @@ organization: #Organization
 // iterate over all stacks to compose their components into a Platform.spec.
 stacks: #Stacks & {
 	argocd: (#StackBuilder & {
-		stack: namespaces: {
-			argocd:          _
-			kargo:           _
-			"argo-rollouts": _
+		stack: {
+			namespaces: {
+				argocd:          _
+				kargo:           _
+				"argo-rollouts": _
+			}
+			httpRoutes: "argocd": {
+				metadata: labels: app: metadata.name
+				spec: {
+					hostnames: ["argocd.\(organization.domain)"]
+					parentRefs: [{
+						name:      "default"
+						namespace: pkg_istio.config.gateway.namespace
+					}]
+					rules: [{
+						backendRefs: [{
+							name:      "argocd-server"
+							namespace: "argocd"
+							port:      80
+						}]
+						matches: [{path: {
+							type:  "PathPrefix"
+							value: "/"
+						}}]
+					}]
+				}
+			}
 		}
 
 		parameters: {
@@ -117,11 +140,11 @@ stacks: #Stacks & {
 						chartRepoURL:  pkg_istio.config.chart.repository.url
 					}
 				}
-				// "httproutes": {
-				// 	name: "httproutes"
-				// 	path: "projects/network/components/httproutes"
-				// 	labels: component: "httproutes"
-				// }
+				"httproutes": {
+					name: "httproutes"
+					path: "stacks/network/components/httproutes"
+					labels: component: "httproutes"
+				}
 			}
 		}
 	}).stack
@@ -166,7 +189,13 @@ stacks: #Stacks & {
 }
 
 // constrain the platform types
-#Stacks: platform.#Stacks & {[_]: #Stack}
+#Stacks: platform.#Stacks & {
+	[_]: #Stack & {
+		httpRoutes: [_]: {
+			metadata: namespace: pkg_istio.config.gateway.namespace
+		}
+	}
+}
 #Stack: platform.#Stack
 
 #StackBuilder: {

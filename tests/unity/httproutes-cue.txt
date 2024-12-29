@@ -1,0 +1,89 @@
+# TODO fix this hack needed to execute from the root
+cd ..
+# Works, but slowly with evalv3=0
+env CUE_EXPERIMENT=embed,evalv3=0
+exec cue export --out yaml -e holos --inject stack=network --inject holos_component_name=httproutes --inject holos_component_path=stacks/network/components/httproutes --inject holos_component_labels={"component":"httproutes","holos.run/component.name":"httproutes","holos.run/stack.name":"network"} ./stacks/network/components/httproutes
+cmp stdout $WORK/golden.txt
+
+# Does not work with evalv3=1
+env CUE_EXPERIMENT=embed,evalv3=1
+exec cue export --out yaml -e holos --inject stack=network --inject holos_component_name=httproutes --inject holos_component_path=stacks/network/components/httproutes --inject holos_component_labels={"component":"httproutes","holos.run/component.name":"httproutes","holos.run/stack.name":"network"} ./stacks/network/components/httproutes
+# cmp stdout $WORK/golden.txt
+
+-- golden.txt --
+kind: BuildPlan
+apiVersion: v1alpha5
+metadata:
+  name: httproutes
+  labels:
+    component: httproutes
+    holos.run/component.name: httproutes
+    holos.run/stack.name: network
+spec:
+  artifacts:
+    - artifact: components/httproutes/httproutes.gen.yaml
+      generators:
+        - kind: Resources
+          output: resources.gen.yaml
+          resources:
+            HTTPRoute:
+              argocd:
+                apiVersion: gateway.networking.k8s.io/v1
+                kind: HTTPRoute
+                metadata:
+                  name: argocd
+                  namespace: istio-ingress
+                  labels:
+                    app: argocd
+                spec:
+                  hostnames:
+                    - argocd.holos.localhost
+                  parentRefs:
+                    - name: default
+                      namespace: istio-ingress
+                  rules:
+                    - backendRefs:
+                        - name: argocd-server
+                          namespace: argocd
+                          port: 80
+                      matches:
+                        - path:
+                            type: PathPrefix
+                            value: /
+      validators: []
+      transformers:
+        - kind: Kustomize
+          inputs:
+            - resources.gen.yaml
+          output: components/httproutes/httproutes.gen.yaml
+          kustomize:
+            kustomization:
+              labels:
+                - includeSelectors: false
+                  pairs:
+                    argocd.argoproj.io/instance: network-httproutes
+              resources:
+                - resources.gen.yaml
+              kind: Kustomization
+              apiVersion: kustomize.config.k8s.io/v1beta1
+    - artifact: gitops/httproutes.application.gen.yaml
+      generators:
+        - kind: Resources
+          output: gitops/httproutes.application.gen.yaml
+          resources:
+            Application:
+              network-httproutes:
+                apiVersion: argoproj.io/v1alpha1
+                kind: Application
+                metadata:
+                  name: network-httproutes
+                  namespace: argocd
+                  labels: {}
+                spec:
+                  destination:
+                    server: https://kubernetes.default.svc
+                  project: network
+                  source:
+                    path: deploy/components/httproutes
+                    repoURL: https://github.com/holos-run/kargo-demo.git
+                    targetRevision: main
