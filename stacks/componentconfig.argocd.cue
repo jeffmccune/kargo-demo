@@ -4,7 +4,13 @@ package holos
 import (
 	"path"
 	app "argoproj.io/application/v1alpha1"
+
+	"example.com/holos/pkg/config/platform"
 )
+
+parameters: {
+	stack: string @tag(stack)
+}
 
 #ComponentConfig: {
 	Name:          _
@@ -12,7 +18,7 @@ import (
 	// Application resources are Cluster scoped.  BuildPlan metadata.name values
 	// are Project scoped.  Construct a unique cluster scoped named to resolve
 	// conflicts within ArgoCD.
-	_ArgoAppName: "\(ProjectName)-\(Name)"
+	_ArgoAppName: "\(parameters.stack)-\(Name)"
 
 	// Allow other aspects of the platform configuration to refer to
 	// `Component._ArgoApplication` to get a handle on the Application resource.
@@ -22,10 +28,10 @@ import (
 		metadata: labels:    Labels
 		spec: {
 			destination: server: "https://kubernetes.default.svc"
-			project: ProjectName
+			project: parameters.stack
 			source: {
 				path:           string | *ResourcesPath
-				repoURL:        Organization.RepoURL
+				repoURL:        platform.organization.repoURL
 				targetRevision: string | *"main"
 			}
 		}
