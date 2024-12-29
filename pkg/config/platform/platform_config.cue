@@ -227,38 +227,77 @@ stacks: #Stacks & {
 
 // projects represent kargo promotion projects, which are specialized stacks.
 projects: #Projects & {
+	httpbin: (platform.#ProjectBuilder & {
+		parameters: {
+			name: "httpbin"
+
+			// components to manage in each stage
+			components: httpbin: {
+				name: "httpbin"
+				path: "stacks/httpbin/components/httpbin"
+				parameters: image: "quay.io/holos/mccutchen/go-httpbin"
+			}
+
+			// Stages organized by prod and nonprod so we can easily get a handle on all
+			// prod stages, for example in the HTTPRoute below.
+			stages: STAGES & {
+				let NONPROD = {tier: "nonprod"}
+				dev: NONPROD & {prior: "direct"}
+				test: NONPROD & {prior: "dev"}
+				uat: NONPROD & {prior: "test"}
+				let PROD = {
+					tier:  "prod"
+					prior: "uat"
+					// We have to stringify all injected tags.  This is a reason to switch to
+					// passing the component over standard input as structured data.
+					component: parameters: replicaCount: "2"
+					component: parameters: version:      "v2.14.0"
+				}
+				"prod-us-east":    PROD
+				"prod-us-central": PROD
+				"prod-us-west":    PROD
+			}
+		}
+	}).project
+
 	podinfo: (platform.#ProjectBuilder & {
 		parameters: {
-			name:   "podinfo"
-			stages: STAGES
+			name: "podinfo"
+			// Stages organized by prod and nonprod so we can easily get a handle on all
+			// prod stages, for example in the HTTPRoute below.
+			stages: STAGES & {
+				let PARAMS = {
+					metadata: name: string
+					component: parameters: message: "Hello! Stage: \(metadata.name)"
+				}
+				let NONPROD = PARAMS & {
+					tier: "nonprod"
+					component: parameters: version: "6.7.0"
+				}
+				dev: NONPROD & {prior: "direct"}
+				test: NONPROD & {prior: "dev"}
+				uat: NONPROD & {prior: "test"}
+				let PROD = PARAMS & {
+					tier:  "prod"
+					prior: "uat"
+					// We have to stringify all injected tags.  This is a reason to switch to
+					// passing the component over standard input as structured data.
+					component: parameters: replicaCount: "2"
+				}
+				"prod-us-east": PROD & {
+					component: parameters: version: "6.6.1"
+				}
+				"prod-us-central": PROD & {
+					component: parameters: version: "6.6.2"
+				}
+				"prod-us-west": PROD & {
+					component: parameters: version: "6.7.0"
+				}
+			}
 			components: "podinfo": {
 				name: "podinfo"
 				path: "stacks/podinfo/components/podinfo"
-				parameters: {
-					stage:   string
-					message: "Hello! Stage: \(stage)"
-					image:   "quay.io/holos/stefanprodan/podinfo"
-					// TODO(jeff): this is horrible but works and preserves the refactor
-					// behavior.
-					// embed stage specific parameters
-					_stages[stage]
-					_stages: {
-						[string]: [string]: string
-						dev: {}
-						test: {}
-						uat: {}
-						let PROD = {
-							replicaCount: "2"
-						}
-						"prod-us-east": PROD & {
-							version: "6.6.1"
-						}
-						"prod-us-central": PROD & {
-							version: "6.6.2"
-						}
-						"prod-us-west": PROD
-					}
-				}
+				parameters: image: "quay.io/holos/stefanprodan/podinfo"
 			}
 		}
 	}).project

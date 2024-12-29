@@ -1,11 +1,17 @@
 package holos
 
-// Parameters injected from the platform spec.
-Parameters: {
-	namespace:    string | *"httpbin-demo"                       @tag(NamespaceName)
+// parameters injected from the platform spec.
+parameters: {
+	namespace:    string | *"httpbin-demo"                       @tag(namespace)
 	image:        string | *"quay.io/holos/mccutchen/go-httpbin" @tag(image)
 	version:      string | *"v2.14.1"                            @tag(version)
 	replicaCount: int | *1                                       @tag(replicaCount, type=int)
+}
+
+// Not used, but part of the project builder interface.
+parameters: {
+	project: string @tag(project)
+	stage:   string @tag(stage)
 }
 
 // BuildPlan for holos to execute.
@@ -14,21 +20,21 @@ holos: Component.BuildPlan
 // Configure the component from input parameters.
 Component: #Kubernetes & {
 	// Configure all resources in the desired namespace
-	Resources: [_]: [_]: metadata: namespace: Parameters.namespace
+	Resources: [_]: [_]: metadata: namespace: parameters.namespace
 
 	Resources: {
 		Deployment: httpbin: {
 			metadata: name:      "httpbin"
-			metadata: namespace: Parameters.namespace
+			metadata: namespace: parameters.namespace
 			spec: {
-				replicas: Parameters.replicaCount
+				replicas: parameters.replicaCount
 				selector: matchLabels: "app.kubernetes.io/name": "httpbin"
 				template: {
 					metadata: labels: selector.matchLabels
 					spec: {
 						containers: [{
 							name:  "httpbin"
-							image: Parameters.image
+							image: parameters.image
 							ports: [{
 								name:          "http"
 								containerPort: 8080
@@ -49,7 +55,7 @@ Component: #Kubernetes & {
 
 		Service: httpbin: {
 			metadata: name:      "httpbin"
-			metadata: namespace: Parameters.namespace
+			metadata: namespace: parameters.namespace
 			spec: {
 				selector: Deployment.httpbin.spec.selector.matchLabels
 				ports: [{
