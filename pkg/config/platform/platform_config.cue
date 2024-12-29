@@ -76,6 +76,45 @@ stacks: #Stacks & {
 					path: "stacks/network/components/gateway-api"
 					annotations: description: "gateway api custom resource definitions"
 				}
+				"istio-base": {
+					path: "stacks/network/components/istio-base"
+					annotations: description: "istio base resources"
+				}
+
+				// "istiod": {
+				// 	name: "istiod"
+				// 	path: "projects/network/components/istiod"
+				// }
+				// "istio-cni": {
+				// 	name: "istio-cni"
+				// 	path: "projects/network/components/istio-cni"
+				// }
+				// "istio-ztunnel": {
+				// 	name: "istio-ztunnel"
+				// 	path: "projects/network/components/istio-ztunnel"
+				// }
+				// "istio-gateway": {
+				// 	name: "istio-gateway"
+				// 	path: "projects/network/components/istio-gateway"
+				// }
+				// "istio-kargo": {
+				// 	name: "istio-promoter"
+				// 	path: "components/addon-promoter"
+				// 	parameters: {
+				// 		KargoProjectName: "istio"
+				// 		KargoStageName:   "main"
+				// 		KargoDataFile:    Config.datafile
+				// 		KargoDataKey:     "chart.version"
+				// 		GitRepoURL:       organization.RepoURL
+				// 		ChartName:        "base"
+				// 		ChartRepoURL:     Config.chart.repository.url
+				// 	}
+				// }
+				// "httproutes": {
+				// 	name: "httproutes"
+				// 	path: "projects/network/components/httproutes"
+				// 	labels: component: "httproutes"
+				// }
 			}
 		}
 	}).stack
