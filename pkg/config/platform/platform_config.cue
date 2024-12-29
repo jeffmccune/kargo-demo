@@ -1,7 +1,10 @@
 @extern(embed)
 package platform
 
-import "example.com/holos/pkg/types/platform"
+import (
+	"example.com/holos/pkg/types/platform"
+	pkg_istio "example.com/holos/pkg/config/istio"
+)
 
 versions: {
 	[string]: string
@@ -66,8 +69,8 @@ stacks: #Stacks & {
 	network: (#StackBuilder & {
 		stack: namespaces: {
 			istio: metadata: labels: "kargo.akuity.io/project": "true"
-			"istio-ingress": _
-			"istio-system":  _
+			(pkg_istio.config.gateway.namespace): _
+			(pkg_istio.config.system.namespace):  _
 		}
 		parameters: {
 			name: "network"
@@ -86,10 +89,11 @@ stacks: #Stacks & {
 					path: "stacks/network/components/istiod"
 					annotations: description: "istiod controller service"
 				}
-				// "istio-cni": {
-				// 	name: "istio-cni"
-				// 	path: "projects/network/components/istio-cni"
-				// }
+				"istio-cni": {
+					name: "istio-cni"
+					path: "stacks/network/components/istio-cni"
+					annotations: description: "istio cni"
+				}
 				// "istio-ztunnel": {
 				// 	name: "istio-ztunnel"
 				// 	path: "projects/network/components/istio-ztunnel"
