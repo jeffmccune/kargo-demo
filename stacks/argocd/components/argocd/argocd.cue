@@ -10,7 +10,7 @@ holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "argocd"
-	Namespace: ArgoCD.Namespace
+	Namespace: "argocd"
 
 	Chart: {
 		name:    "argo-cd"

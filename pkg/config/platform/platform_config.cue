@@ -37,6 +37,10 @@ stacks: #Stacks & {
 					path: "stacks/argocd/components/rollouts-crds"
 					annotations: description: "argo rollouts custom resource definitions for kargo"
 				}
+				"argocd": {
+					path: "stacks/argocd/components/argocd"
+					annotations: description: "argocd controller services"
+				}
 			}
 		}
 	}).stack
