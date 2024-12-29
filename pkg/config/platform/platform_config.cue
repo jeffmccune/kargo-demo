@@ -14,6 +14,9 @@ organization: #Organization
 // iterate over all stacks to compose their components into a Platform.spec.
 stacks: #Stacks & {
 	argocd: (#StackBuilder & {
+		// Manage the argocd namespace
+		stack: namespaces: argocd: _
+
 		parameters: {
 			name: "argocd"
 			components: {
@@ -27,7 +30,6 @@ stacks: #Stacks & {
 				}
 			}
 		}
-		stack: namespaces: argocd: _
 	}).stack
 
 	network: (#StackBuilder & {
@@ -49,6 +51,10 @@ stacks: #Stacks & {
 				namespaces: {
 					path: "stacks/security/components/namespaces"
 					annotations: description: "configures namespaces for all stacks"
+				}
+				"external-secrets-crds": {
+					path: "stacks/security/components/external-secrets-crds"
+					annotations: description: "external secrets custom resource definitions"
 				}
 			}
 		}
