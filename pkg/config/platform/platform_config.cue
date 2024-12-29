@@ -33,17 +33,22 @@ stacks: #Stacks & {
 					path: "stacks/argocd/components/argocd-crds"
 					annotations: description: "argocd custom resource definitions"
 				}
-				"rollouts-crds": {
-					path: "stacks/argocd/components/rollouts-crds"
-					annotations: description: "argo rollouts custom resource definitions for kargo"
-				}
 				"argocd": {
 					path: "stacks/argocd/components/argocd"
 					annotations: description: "argocd controller services"
 				}
 				"app-projects": {
 					path: "stacks/argocd/components/app-projects"
-					annotations: description: "manage argocd AppProject resources for each stack"
+					annotations: description: "argocd AppProject resources for each stack"
+				}
+
+				"rollouts-crds": {
+					path: "stacks/argocd/components/rollouts-crds"
+					annotations: description: "argo rollouts custom resource definitions for kargo"
+				}
+				"rollouts": {
+					path: "stacks/argocd/components/rollouts"
+					annotations: description: "argo rollouts controller service"
 				}
 			}
 		}

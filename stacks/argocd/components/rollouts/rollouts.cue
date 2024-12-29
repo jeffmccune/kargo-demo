@@ -3,6 +3,6 @@ package holos
 holos: Component.BuildPlan
 
 Component: #Kustomize & {
-	KustomizeConfig: Kustomization: namespace: ArgoRollouts.Namespace
+	KustomizeConfig: Kustomization: namespace: "argo-rollouts"
 	KustomizeConfig: Files: "rollouts.yaml":   _
 }
