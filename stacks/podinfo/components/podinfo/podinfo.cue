@@ -1,8 +1,10 @@
 package holos
 
-// Parameters injected from the platform spec.
-Parameters: {
-	namespace:    string | *"podinfo-demo"                 @tag(NamespaceName)
+// parameters injected from the platform spec.
+parameters: {
+	project:      string                                   @tag(project)
+	stage:        string                                   @tag(stage)
+	namespace:    string | *"podinfo-demo"                 @tag(namespace)
 	image:        string | *"ghcr.io/stefanprodan/podinfo" @tag(image)
 	message:      string | *"Hello World"                  @tag(message)
 	version:      string | *"6.7.0"                        @tag(version)
@@ -17,20 +19,20 @@ Component: #Helm & {
 	Chart: {
 		name:    "oci://ghcr.io/stefanprodan/charts/podinfo"
 		release: "podinfo"
-		version: Parameters.version
+		version: parameters.version
 	}
 
 	// Ensure all resources are located in the provided namespace
-	KustomizeConfig: Kustomization: namespace: Parameters.namespace
+	KustomizeConfig: Kustomization: namespace: parameters.namespace
 
 	// The #Values definition is imported from the chart and defined in
 	// values_schema.cue
 	Values: #Values & {
-		replicaCount: Parameters.replicaCount
-		ui: message: Parameters.message
+		replicaCount: parameters.replicaCount
+		ui: message: parameters.message
 		image: {
 			tag:        Chart.version
-			repository: Parameters.image
+			repository: parameters.image
 		}
 	}
 }

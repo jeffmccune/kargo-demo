@@ -224,3 +224,71 @@ stacks: #Stacks & {
 		}
 	}
 }
+
+// projects represent kargo promotion projects, which are specialized stacks.
+projects: #Projects & {
+	podinfo: (platform.#ProjectBuilder & {
+		parameters: {
+			name:   "podinfo"
+			stages: STAGES
+			components: "podinfo": {
+				name: "podinfo"
+				path: "stacks/podinfo/components/podinfo"
+				parameters: {
+					stage:   string
+					message: "Hello! Stage: \(stage)"
+					image:   "quay.io/holos/stefanprodan/podinfo"
+					// TODO(jeff): this is horrible but works and preserves the refactor
+					// behavior.
+					// embed stage specific parameters
+					_stages[stage]
+					_stages: {
+						[string]: [string]: string
+						dev: {}
+						test: {}
+						uat: {}
+						let PROD = {
+							replicaCount: "2"
+						}
+						"prod-us-east": PROD & {
+							version: "6.6.1"
+						}
+						"prod-us-central": PROD & {
+							version: "6.6.2"
+						}
+						"prod-us-west": PROD
+					}
+				}
+			}
+		}
+	}).project
+}
+#Projects: platform.#Projects & {
+	[NAME=string]: #Project & {metadata: name: NAME}
+}
+#Project: platform.#Project & {stack: #Stack}
+
+// Compose each Kargo project into stacks.
+for PROJECT in projects {
+	stacks: (PROJECT.stack.metadata.name): PROJECT.stack
+}
+
+// stages represents stages to manage.
+let STAGES = stages
+
+stages: platform.#Stages & {
+	let NONPROD = {
+		tier: "nonprod"
+	}
+	dev: NONPROD
+	test: NONPROD & {prior: dev.metadata.name}
+	uat: NONPROD & {prior: test.metadata.name}
+
+	let PROD = {
+		tier:  "prod"
+		prior: uat.metadata.name
+	}
+	"prod-us-east":    PROD
+	"prod-us-central": PROD
+	"prod-us-west":    PROD
+}

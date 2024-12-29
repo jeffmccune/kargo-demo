@@ -1,4 +1,4 @@
-package kargo
+package platform
 
 import stage "kargo.akuity.io/stage/v1alpha1"
 
