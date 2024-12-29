@@ -1,5 +1,4 @@
-@if(!NoKargo && !NoArgoRollouts && !NoArgoCD)
-package holos
+package kargo
 
 #KargoValues: {
 	//# Default values for kargo.

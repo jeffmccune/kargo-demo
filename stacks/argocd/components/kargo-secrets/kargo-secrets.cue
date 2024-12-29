@@ -1,14 +1,16 @@
 package holos
 
+import "example.com/holos/pkg/config/kargo"
+
 // Produce a helm chart build plan.
 holos: Component.BuildPlan
 
 Component: #Kubernetes & {
-	Resources: [_]: [_]: metadata: namespace: Kargo.Namespace
+	Resources: [_]: [_]: metadata: namespace: kargo.config.namespace
 
 	Resources: {
 		ExternalSecret: creds: {
-			metadata: name: Kargo.Values.api.secret.name
+			metadata: name: kargo.config.values.api.secret.name
 			spec: {
 				refreshInterval: "24h"
 				target: {

@@ -1,5 +1,4 @@
-@if(!NoExternalSecrets)
-package holos
+package externalsecrets
 
 import (
 	es "external-secrets.io/externalsecret/v1beta1"
@@ -7,9 +6,7 @@ import (
 	pw "generators.external-secrets.io/password/v1alpha1"
 )
 
-ExternalSecrets: {
-	Version: "0.10.7"
-}
+config: version: "0.10.7"
 
 #Resources: {
 	ExternalSecret?: [_]: es.#ExternalSecret
