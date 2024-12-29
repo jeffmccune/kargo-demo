@@ -14,8 +14,11 @@ organization: #Organization
 // iterate over all stacks to compose their components into a Platform.spec.
 stacks: #Stacks & {
 	argocd: (#StackBuilder & {
-		// Manage the argocd namespace
-		stack: namespaces: argocd: _
+		stack: namespaces: {
+			argocd:          _
+			kargo:           _
+			"argo-rollouts": _
+		}
 
 		parameters: {
 			name: "argocd"
@@ -33,6 +36,11 @@ stacks: #Stacks & {
 	}).stack
 
 	network: (#StackBuilder & {
+		stack: namespaces: {
+			istio: metadata: labels: "kargo.akuity.io/project": "true"
+			"istio-ingress": _
+			"istio-system":  _
+		}
 		parameters: {
 			name: "network"
 			components: {
@@ -45,6 +53,10 @@ stacks: #Stacks & {
 	}).stack
 
 	security: (#StackBuilder & {
+		stack: namespaces: {
+			"cert-manager": metadata: labels: "kargo.akuity.io/project": "true"
+			"external-secrets": _
+		}
 		parameters: {
 			name: "security"
 			components: {
