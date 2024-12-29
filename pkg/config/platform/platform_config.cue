@@ -30,6 +30,18 @@ stacks: #Stacks & {
 		stack: namespaces: argocd: _
 	}).stack
 
+	network: (#StackBuilder & {
+		parameters: {
+			name: "network"
+			components: {
+				"gateway-api": {
+					path: "stacks/network/components/gateway-api"
+					annotations: description: "gateway api custom resource definitions"
+				}
+			}
+		}
+	}).stack
+
 	security: (#StackBuilder & {
 		parameters: {
 			name: "security"
@@ -59,7 +71,8 @@ stacks: #Stacks & {
 			components: "stacks:\(metadata.name):components:\(KEY)": COMPONENT & {
 				name: KEY
 				let STACK_NAME = stack.metadata.name
-				labels: "holos.run/stack.name": STACK_NAME
+				labels: "holos.run/stack.name":     STACK_NAME
+				labels: "holos.run/component.name": name
 				// Pass the stack name as a parameter for use with componentconfig.argocd.cue
 				parameters: stack: STACK_NAME
 
