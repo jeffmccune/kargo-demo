@@ -1,5 +1,9 @@
 package holos
 
+parameters: {
+	version: string | *"0.10.7" @tag(version)
+}
+
 // Produce a helm chart build plan.
 holos: Component.BuildPlan
 
@@ -8,7 +12,7 @@ Component: #Helm & {
 	Namespace: "external-secrets"
 
 	Chart: {
-		version: "0.10.3"
+		version: parameters.version
 		repository: {
 			name: "external-secrets"
 			url:  "https://charts.external-secrets.io"

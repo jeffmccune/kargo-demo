@@ -3,6 +3,12 @@ package platform
 
 import "example.com/holos/pkg/types/platform"
 
+versions: {
+	[string]: string
+
+	externalSecrets: "0.10.7"
+}
+
 organization: #Organization
 #Organization: platform.#Organization & {
 	displayName: "Holos Example"
@@ -67,6 +73,12 @@ stacks: #Stacks & {
 				"external-secrets-crds": {
 					path: "stacks/security/components/external-secrets-crds"
 					annotations: description: "external secrets custom resource definitions"
+					parameters: version:      versions.externalSecrets
+				}
+				"external-secrets": {
+					path: "stacks/security/components/external-secrets"
+					annotations: description: "external secrets custom resource definitions"
+					parameters: version:      versions.externalSecrets
 				}
 			}
 		}
