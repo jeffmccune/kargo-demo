@@ -99,10 +99,11 @@ stacks: #Stacks & {
 					path: "stacks/network/components/istio-ztunnel"
 					annotations: description: "istio ztunnel for ambient mode"
 				}
-				// "istio-gateway": {
-				// 	name: "istio-gateway"
-				// 	path: "projects/network/components/istio-gateway"
-				// }
+				"istio-gateway": {
+					name: "istio-gateway"
+					path: "stacks/network/components/istio-gateway"
+					annotations: description: "istio ingress gateway"
+				}
 				// "istio-kargo": {
 				// 	name: "istio-promoter"
 				// 	path: "components/addon-promoter"

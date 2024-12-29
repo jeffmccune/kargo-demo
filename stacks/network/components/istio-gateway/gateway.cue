@@ -1,13 +1,16 @@
 package holos
 
-import "example.com/platform/config/istio"
+import (
+	"example.com/holos/pkg/config/istio"
+	"example.com/holos/pkg/config/platform"
+)
 
 // Produce a kubernetes objects build plan.
 holos: Component.BuildPlan
 
 Component: #Kubernetes & {
 	Name:      "istio-gateway"
-	Namespace: istio.Config.Gateway.Namespace
+	Namespace: istio.config.gateway.namespace
 
 	Resources: {
 		// The default gateway with all listeners attached to tls certs.
@@ -41,7 +44,7 @@ Component: #Kubernetes & {
 		Certificate: "gateway-cert": {
 			metadata: name:      "gateway-cert"
 			metadata: namespace: Namespace
-			spec: commonName:    Organization.Domain
+			spec: commonName:    platform.organization.domain
 			spec: dnsNames: [spec.commonName, "*.\(spec.commonName)"]
 			spec: secretName: metadata.name
 			spec: issuerRef: {
