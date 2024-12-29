@@ -1,12 +1,12 @@
 @extern(embed)
 package certmanager
 
-import "example.com/platform/schemas/certmanager"
+import "github.com/holos-run/holos/api/core/v1alpha5:core"
 
 // Unify data from yaml for Kargo integration.
 _data: _ @embed(file=cert-manager.yaml)
 
-Config: certmanager.#Config & {
+Config: #Config & {
 	namespace: "cert-manager"
 	// datafile value must align to the embed file directive above for proper
 	// configuration of Kargo promotion stages.
@@ -18,5 +18,13 @@ Config: certmanager.#Config & {
 			name: "jetstack"
 			url:  "https://charts.jetstack.io"
 		}
+	}
+}
+
+#Config: {
+	namespace: string
+	datafile:  string
+	chart: core.#Chart & {
+		version: =~"^v{0,1}[0-9]+\\.[0-9]+\\.[0-9]+$"
 	}
 }

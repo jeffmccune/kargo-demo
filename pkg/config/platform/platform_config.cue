@@ -80,6 +80,14 @@ stacks: #Stacks & {
 					annotations: description: "external secrets custom resource definitions"
 					parameters: version:      versions.externalSecrets
 				}
+				"cert-manager": {
+					path: "stacks/security/components/cert-manager"
+					annotations: description: "cert-manager operator and custom resource definitions"
+					parameters: {
+						kargoProject: "cert-manager"
+						kargoStage:   "main"
+					}
+				}
 			}
 		}
 	}).stack
