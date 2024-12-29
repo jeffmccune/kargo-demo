@@ -28,7 +28,7 @@ spec:
         uses: git-clone
       - as: update
         config:
-          path: src/config/istio/istio.yaml
+          path: src/pkg/config/istio/istio.yaml
           updates:
           - key: chart.version
             value: ${{ chartFrom('https://istio-release.storage.googleapis.com/charts',

@@ -104,19 +104,19 @@ stacks: #Stacks & {
 					path: "stacks/network/components/istio-gateway"
 					annotations: description: "istio ingress gateway"
 				}
-				// "istio-kargo": {
-				// 	name: "istio-promoter"
-				// 	path: "components/addon-promoter"
-				// 	parameters: {
-				// 		KargoProjectName: "istio"
-				// 		KargoStageName:   "main"
-				// 		KargoDataFile:    Config.datafile
-				// 		KargoDataKey:     "chart.version"
-				// 		GitRepoURL:       organization.RepoURL
-				// 		ChartName:        "base"
-				// 		ChartRepoURL:     Config.chart.repository.url
-				// 	}
-				// }
+				"istio-promoter": {
+					name: "istio-promoter"
+					path: "stacks/shared/components/addon-promoter"
+					parameters: {
+						kargoProject:  "istio"
+						kargoStage:    "main"
+						kargoDataFile: pkg_istio.config.datafile
+						kargoDataKey:  "chart.version"
+						gitRepoURL:    organization.repoURL
+						chartName:     "base"
+						chartRepoURL:  pkg_istio.config.chart.repository.url
+					}
+				}
 				// "httproutes": {
 				// 	name: "httproutes"
 				// 	path: "projects/network/components/httproutes"

@@ -2,16 +2,16 @@ package holos
 
 import "path"
 
-Parameters: {
-	KargoProjectName: string           @tag(KargoProjectName)
-	KargoStageName:   string | *"main" @tag(KargoStageName)
+parameters: {
+	kargoProject: string           @tag(kargoProject)
+	kargoStage:   string | *"main" @tag(kargoStage)
 	// The datafile where the version is stored
-	KargoDataFile: string @tag(KargoDataFile)
+	kargoDataFile: string @tag(kargoDataFile)
 	// The key in the data file where the version is stored
-	KargoDataKey: string @tag(KargoDataKey)
-	GitRepoURL:   string @tag(GitRepoURL)
-	ChartName:    string @tag(ChartName)
-	ChartRepoURL: string @tag(ChartRepoURL)
+	kargoDataKey: string @tag(kargoDataKey)
+	gitRepoURL:   string @tag(gitRepoURL)
+	chartName:    string @tag(chartName)
+	chartRepoURL: string @tag(chartRepoURL)
 }
 
 holos: Component.BuildPlan
@@ -27,14 +27,14 @@ Component: #Kubernetes & {
 		// The project is the same as the namespace, we adopt the namespace with the
 		// kargo.akuity.io/project: "true" label, configured by the namespaces
 		// component.
-		Project: (Parameters.KargoProjectName): spec: promotionPolicies: [{
-			stage:                Parameters.KargoStageName
+		Project: (parameters.kargoProject): spec: promotionPolicies: [{
+			stage:                parameters.kargoStage
 			autoPromotionEnabled: true
 		}]
 
-		Warehouse: (Parameters.KargoProjectName): {
-			metadata: name:      Parameters.KargoProjectName
-			metadata: namespace: Parameters.KargoProjectName
+		Warehouse: (parameters.kargoProject): {
+			metadata: name:      parameters.kargoProject
+			metadata: namespace: parameters.kargoProject
 			spec: {
 				// implicit value is Automatic
 				freightCreationPolicy: "Automatic"
@@ -46,24 +46,24 @@ Component: #Kubernetes & {
 						// because the pipeline submits a pull request that must be manually
 						// reviewed and approved.  The purpose is to automate the process of
 						// showing the platform engineer what will change.
-						name:    Parameters.ChartName
-						repoURL: Parameters.ChartRepoURL
+						name:    parameters.chartName
+						repoURL: parameters.chartRepoURL
 					}
 				}]
 			}
 		}
 
 		let SRC_PATH = "./src"
-		let DATAFILE = path.Join([SRC_PATH, Parameters.KargoDataFile], path.Unix)
+		let DATAFILE = path.Join([SRC_PATH, parameters.kargoDataFile], path.Unix)
 
-		Stage: (Parameters.KargoStageName): {
-			metadata: name:      Parameters.KargoStageName
-			metadata: namespace: Parameters.KargoProjectName
+		Stage: (parameters.kargoStage): {
+			metadata: name:      parameters.kargoStage
+			metadata: namespace: parameters.kargoProject
 			spec: {
 				requestedFreight: [{
 					origin: {
 						kind: "Warehouse"
-						name: Warehouse[Parameters.KargoProjectName].metadata.name
+						name: Warehouse[parameters.kargoProject].metadata.name
 					}
 					sources: direct: true
 				}]
@@ -72,7 +72,7 @@ Component: #Kubernetes & {
 						{
 							uses: "git-clone"
 							config: {
-								repoURL: Parameters.GitRepoURL
+								repoURL: parameters.gitRepoURL
 								// Unlike the Kargo Quickstart, we aren't promoting into a
 								// different branch, we're going to submit a PR to main, so we
 								// only need to checkout main.
@@ -88,9 +88,9 @@ Component: #Kubernetes & {
 							config: {
 								path: DATAFILE
 								updates: [{
-									key: Parameters.KargoDataKey
+									key: parameters.kargoDataKey
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom('\(Parameters.ChartRepoURL)', '\(Parameters.ChartName)', warehouse('\(Parameters.KargoProjectName)')).Version }}"
+									value: "${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(parameters.kargoProject)')).Version }}"
 								}]
 							}
 						},
@@ -100,7 +100,7 @@ Component: #Kubernetes & {
 							as:   "commit"
 							config: {
 								path:    SRC_PATH
-								message: "\(Parameters.KargoProjectName): update to ${{ chartFrom('\(Parameters.ChartRepoURL)', '\(Parameters.ChartName)', warehouse('\(Parameters.KargoProjectName)')).Version }}"
+								message: "\(parameters.kargoProject): update to ${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(parameters.kargoProject)')).Version }}"
 							}
 						},
 						{
@@ -117,7 +117,7 @@ Component: #Kubernetes & {
 							uses: "git-open-pr"
 							as:   "pull"
 							config: {
-								repoURL:      Parameters.GitRepoURL
+								repoURL:      parameters.gitRepoURL
 								sourceBranch: "${{ outputs.push.branch }}"
 								targetBranch: "main"
 							}
