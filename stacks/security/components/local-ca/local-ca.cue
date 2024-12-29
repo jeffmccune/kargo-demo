@@ -2,7 +2,7 @@ package holos
 
 import (
 	ci "cert-manager.io/clusterissuer/v1"
-	"example.com/platform/config/certmanager"
+	"example.com/holos/pkg/config/certmanager"
 )
 
 // Produce a kubernetes objects build plan.

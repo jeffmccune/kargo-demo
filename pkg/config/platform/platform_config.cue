@@ -88,6 +88,10 @@ stacks: #Stacks & {
 						kargoStage:   "main"
 					}
 				}
+				"local-ca": {
+					path: "stacks/security/components/local-ca"
+					annotations: description: "localhost mkcert certificate authority"
+				}
 			}
 		}
 	}).stack
