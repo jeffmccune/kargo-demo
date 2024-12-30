@@ -114,7 +114,7 @@ Generate the secret:
 
 ```txt
 Secret created, apply with:
-  kubectl apply -f '/Users/jeff/Library/Application Support/mkcert/kargo.yaml'
+  kubectl apply -f ~/Library/Application\ Support/mkcert/kargo.yaml
 
 The reset-cluster script will automatically apply this secret going forward.
 ```
@@ -128,19 +128,6 @@ kubectl apply -f '/Users/jeff/Library/Application Support/mkcert/kargo.yaml'
 ## Verification
 
 Make sure you've configured Holos to use your `bank-of-holos` fork.
-
-```shell
-cat <<EOF > organization-repo-${USER}.cue
-```
-```cue showLineNumbers
-@if($USER)
-package holos
-
-Organization: RepoURL: "${BANK_OF_HOLOS_REPO_URL}"
-```
-```shell
-EOF
-```
 
 Then reset the cluster fully.  (Note this will delete and re-create your local
 k3d cluster)
