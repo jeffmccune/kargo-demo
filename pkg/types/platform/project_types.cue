@@ -103,8 +103,9 @@ import stage "kargo.akuity.io/stage/v1alpha1"
 				namespaces: "\(STAGE.metadata.name)-\(PROJECT_NAME)": {
 					// Label the namespace with the stage name and tier so we can select
 					// where to route traffic easily.
-					metadata: labels: "holos.run/stage.name": STAGE.metadata.name
-					metadata: labels: "holos.run/stage.tier": STAGE.tier
+					metadata: labels: "holos.run/stage.name":        STAGE.metadata.name
+					metadata: labels: "holos.run/stage.tier":        STAGE.tier
+					metadata: labels: "holos.run/httproute.project": PROJECT_NAME
 				}
 
 				for COMPONENT in parameters.components {

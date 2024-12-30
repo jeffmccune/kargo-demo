@@ -214,12 +214,6 @@ stacks: #Stacks & {
 				labels: "holos.run/component.name": name
 				// Pass the stack name as a parameter for use with componentconfig.argocd.cue
 				parameters: stack: STACK_NAME
-
-				// configure output manifests to stacks/foo/components/bar/bar.gen.yaml
-				// for component bar.
-				// TODO(jeff): uncomment to desired per-stack location after domain
-				// model refactor completes.
-				// parameters: outputBaseDir: "stacks/\(metadata.name)"
 			}
 		}
 	}
@@ -228,6 +222,8 @@ stacks: #Stacks & {
 // projects represent kargo promotion projects, which are specialized stacks.
 projects: #Projects & {
 	httpbin: (platform.#ProjectBuilder & {
+		let IMAGE = "quay.io/holos/mccutchen/go-httpbin"
+		let PROJECT_NAME = parameters.name
 		parameters: {
 			name: "httpbin"
 
@@ -235,7 +231,7 @@ projects: #Projects & {
 			components: httpbin: {
 				name: "httpbin"
 				path: "stacks/httpbin/components/httpbin"
-				parameters: image: "quay.io/holos/mccutchen/go-httpbin"
+				parameters: image: IMAGE
 			}
 
 			// Stages organized by prod and nonprod so we can easily get a handle on all
@@ -258,9 +254,24 @@ projects: #Projects & {
 				"prod-us-west":    PROD
 			}
 		}
+		project: stack: components: {
+			// Compose the Kargo promotion stages into the holos project components.
+			// Project owners are expected to copy the component path into
+			// projects/<project name>/components/kargo-stages and customize it as needed
+			// to define their promotion process.
+			"project:\(PROJECT_NAME):component:kargo-stages": {
+				name: "kargo-stages"
+				path: "stacks/shared/components/kargo-stages"
+				parameters: image:            IMAGE
+				parameters: project:          PROJECT_NAME
+				parameters: semverConstraint: "^2.0.0"
+			}
+		}
 	}).project
 
 	podinfo: (platform.#ProjectBuilder & {
+		let IMAGE = "quay.io/holos/stefanprodan/podinfo"
+		let PROJECT_NAME = parameters.name
 		parameters: {
 			name: "podinfo"
 			// Stages organized by prod and nonprod so we can easily get a handle on all
@@ -297,7 +308,20 @@ projects: #Projects & {
 			components: "podinfo": {
 				name: "podinfo"
 				path: "stacks/podinfo/components/podinfo"
-				parameters: image: "quay.io/holos/stefanprodan/podinfo"
+				parameters: image: IMAGE
+			}
+		}
+		project: stack: components: {
+			// Compose the Kargo promotion stages into the holos project components.
+			// Project owners are expected to copy the component path into
+			// projects/<project name>/components/kargo-stages and customize it as needed
+			// to define their promotion process.
+			"project:\(PROJECT_NAME):component:kargo-stages": {
+				name: "kargo-stages"
+				path: "stacks/shared/components/kargo-stages"
+				parameters: image:            IMAGE
+				parameters: project:          PROJECT_NAME
+				parameters: semverConstraint: "^6.0.0"
 			}
 		}
 	}).project

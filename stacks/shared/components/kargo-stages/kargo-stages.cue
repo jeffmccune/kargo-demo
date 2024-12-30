@@ -2,10 +2,15 @@
 
 package holos
 
+import "example.com/holos/pkg/config/platform"
+
 // _image represents the image to promote through the stages.  For example:
 // "us-central1-docker.pkg.dev/bank-of-anthos-ci/bank-of-anthos/frontend"
-_image:            string @tag(image)
-_semverConstraint: string @tag(semverConstraint)
+parameters: {
+	project:          string @tag(project)
+	image:            string @tag(image)
+	semverConstraint: string @tag(semverConstraint)
+}
 
 holos: Component.BuildPlan
 
@@ -16,21 +21,21 @@ holos: Component.BuildPlan
 Component: #Kubernetes & {
 	Resources: {
 		// Place all of the resources in the Kargo Project namespace.
-		[_]: [_]: metadata: namespace: ProjectName
+		[_]: [_]: metadata: namespace: parameters.project
 
-		Warehouse: (ProjectName): {
+		Warehouse: (parameters.project): {
 			spec: {
 				subscriptions: [{
 					image: {
-						repoURL:          _image
-						semverConstraint: _semverConstraint
+						repoURL:          parameters.image
+						semverConstraint: parameters.semverConstraint
 						discoveryLimit:   5
 					}
 				}]
 			}
 		}
 
-		for STAGE in KargoProjects[ProjectName].stages {
+		for STAGE in platform.projects[parameters.project].stages {
 			// NOTE: This assumes a simple structure where there is one component
 			// named the same as the project which is managed in each stage.  This
 			// hols true for podinfo.  There is a component named podinfo managed in
@@ -42,11 +47,13 @@ Component: #Kubernetes & {
 			// structure.  This structure would vary over on the promotable
 			// components, images, and stages within the Project, likely defined as a
 			// field of the #KargoProject definition.
-			let ComponentName = "\(STAGE.name)-\(ProjectName)"
+			let ProjectName = parameters.project
+			let StageName = STAGE.metadata.name
+			let ComponentName = "\(StageName)-\(ProjectName)"
 			let OutPath = "deploy/projects/\(ProjectName)/components/\(ComponentName)"
 			let BRANCH = "project/\(ProjectName)/component/\(ComponentName)"
 
-			Stage: (STAGE.name): {
+			Stage: (StageName): {
 				spec: {
 					// The requested freight is a static structure where users actually
 					// define how artifacts are promoted with kargo.  Currently this is a
@@ -54,7 +61,7 @@ Component: #Kubernetes & {
 					// from the uat stage.
 					//
 					// See projects.podinfo.cue for an example of how this is configured.
-					requestedFreight: KargoProjects[ProjectName].promotions[STAGE.name].requestedFreight
+					requestedFreight: platform.projects[ProjectName].promotions[StageName].requestedFreight
 					promotionTemplate: spec: {
 						let SRC = "./src"
 						let OUT = "./out"
@@ -62,7 +69,7 @@ Component: #Kubernetes & {
 							{
 								uses: "git-clone"
 								config: {
-									repoURL: Organization.RepoURL
+									repoURL: platform.organization.repoURL
 									checkout: [
 										{
 											branch: "main"
@@ -87,7 +94,7 @@ Component: #Kubernetes & {
 								as:   "update-image"
 								config: {
 									path: "\(SRC)/\(OutPath)"
-									images: [{image: _image}]
+									images: [{image: parameters.image}]
 								}
 							},
 							{
@@ -118,7 +125,7 @@ Component: #Kubernetes & {
 									apps: [{
 										name: "\(ProjectName)-\(ComponentName)"
 										sources: [{
-											repoURL:               Organization.RepoURL
+											repoURL:               platform.organization.repoURL
 											desiredCommitFromStep: "commit"
 										}]
 									}]
