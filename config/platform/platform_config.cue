@@ -29,27 +29,6 @@ stacks: #Stacks & {
 				kargo:           _
 				"argo-rollouts": _
 			}
-			httpRoutes: "argocd": {
-				metadata: labels: app: metadata.name
-				spec: {
-					hostnames: ["argocd.\(organization.domain)"]
-					parentRefs: [{
-						name:      "default"
-						namespace: pkg_istio.config.gateway.namespace
-					}]
-					rules: [{
-						backendRefs: [{
-							name:      "argocd-server"
-							namespace: "argocd"
-							port:      80
-						}]
-						matches: [{path: {
-							type:  "PathPrefix"
-							value: "/"
-						}}]
-					}]
-				}
-			}
 		}
 
 		parameters: {
@@ -198,13 +177,7 @@ stacks: #Stacks & {
 }
 
 // constrain the platform types
-#Stacks: platform.#Stacks & {
-	[_]: #Stack & {
-		httpRoutes: [_]: {
-			metadata: namespace: pkg_istio.config.gateway.namespace
-		}
-	}
-}
+#Stacks: platform.#Stacks & {[_]: #Stack}
 #Stack: platform.#Stack
 
 #StackBuilder: {
