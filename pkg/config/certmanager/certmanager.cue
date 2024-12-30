@@ -6,7 +6,7 @@ import "github.com/holos-run/holos/api/core/v1alpha5:core"
 // Unify data from yaml for Kargo integration.
 _data: _ @embed(file=cert-manager.yaml)
 
-Config: #Config & {
+config: #Config & {
 	namespace: "cert-manager"
 	// datafile value must align to the embed file directive above for proper
 	// configuration of Kargo promotion stages.

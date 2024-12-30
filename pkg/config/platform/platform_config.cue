@@ -183,6 +183,15 @@ stacks: #Stacks & {
 					path: "stacks/security/components/local-ca"
 					annotations: description: "localhost mkcert certificate authority"
 				}
+				"cert-manager-kargo": {
+					// TODO(jeff) refactor to use stacks/shared/components/addon-promoter
+					path: "stacks/security/components/cert-manager-kargo"
+					annotations: description: "cert-manager kargo promotion stages"
+					parameters: {
+						project: "cert-manager"
+						stage:   "main"
+					}
+				}
 			}
 		}
 	}).stack

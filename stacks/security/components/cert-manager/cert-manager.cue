@@ -7,8 +7,8 @@ holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "cert-manager"
-	Namespace: certmanager.Config.namespace
-	Chart:     certmanager.Config.chart
+	Namespace: certmanager.config.namespace
+	Chart:     certmanager.config.chart
 
 	EnableHooks: true
 

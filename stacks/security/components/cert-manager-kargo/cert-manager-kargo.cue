@@ -2,12 +2,14 @@ package holos
 
 import (
 	"path"
-	"example.com/platform/config/certmanager"
+
+	"example.com/holos/pkg/config/certmanager"
+	"example.com/holos/pkg/config/platform"
 )
 
-Parameters: {
-	KargoProjectName: string @tag(KargoProjectName)
-	KargoStageName:   string @tag(KargoStageName)
+parameters: {
+	project: string @tag(project)
+	stage:   string @tag(stage)
 }
 
 holos: Component.BuildPlan
@@ -25,14 +27,14 @@ Component: #Kubernetes & {
 		// The project is the same as the namespace, we adopt the namespace with the
 		// kargo.akuity.io/project: "true" label, configured by the namespaces
 		// component.
-		Project: (certmanager.Config.namespace): spec: promotionPolicies: [{
+		Project: (certmanager.config.namespace): spec: promotionPolicies: [{
 			stage:                STAGE
 			autoPromotionEnabled: true
 		}]
 
 		Warehouse: "cert-manager": {
 			metadata: name:      "cert-manager"
-			metadata: namespace: certmanager.Config.namespace
+			metadata: namespace: certmanager.config.namespace
 			spec: {
 				// implicit value is Automatic
 				freightCreationPolicy: "Automatic"
@@ -44,19 +46,19 @@ Component: #Kubernetes & {
 						// because the pipeline submits a pull request that must be manually
 						// reviewed and approved.  The purpose is to automate the process of
 						// showing the platform engineer what will change.
-						name:    certmanager.Config.chart.name
-						repoURL: certmanager.Config.chart.repository.url
+						name:    certmanager.config.chart.name
+						repoURL: certmanager.config.chart.repository.url
 					}
 				}]
 			}
 		}
 
 		let SRC_PATH = "./src"
-		let DATAFILE = path.Join([SRC_PATH, certmanager.Config.datafile], path.Unix)
+		let DATAFILE = path.Join([SRC_PATH, certmanager.config.datafile], path.Unix)
 
 		Stage: (STAGE): {
 			metadata: name:      STAGE
-			metadata: namespace: certmanager.Config.namespace
+			metadata: namespace: certmanager.config.namespace
 			spec: {
 				requestedFreight: [{
 					origin: {
@@ -70,7 +72,7 @@ Component: #Kubernetes & {
 						{
 							uses: "git-clone"
 							config: {
-								repoURL: Organization.RepoURL
+								repoURL: platform.organization.repoURL
 								// Unlike the Kargo Quickstart, we aren't promoting into a
 								// different branch, we're going to submit a PR to main, so we
 								// only need to checkout main.
@@ -88,7 +90,7 @@ Component: #Kubernetes & {
 								updates: [{
 									key: "chart.version"
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom('\(certmanager.Config.chart.repository.url)', '\(certmanager.Config.chart.name)', warehouse('cert-manager')).Version }}"
+									value: "${{ chartFrom('\(certmanager.config.chart.repository.url)', '\(certmanager.config.chart.name)', warehouse('cert-manager')).Version }}"
 								}]
 							}
 						},
@@ -98,7 +100,7 @@ Component: #Kubernetes & {
 							as:   "commit"
 							config: {
 								path:    SRC_PATH
-								message: "cert-manager: update to ${{ chartFrom('\(certmanager.Config.chart.repository.url)', '\(certmanager.Config.chart.name)', warehouse('cert-manager')).Version }}"
+								message: "cert-manager: update to ${{ chartFrom('\(certmanager.config.chart.repository.url)', '\(certmanager.config.chart.name)', warehouse('cert-manager')).Version }}"
 							}
 						},
 						{
@@ -115,7 +117,7 @@ Component: #Kubernetes & {
 							uses: "git-open-pr"
 							as:   "pull"
 							config: {
-								repoURL:      Organization.RepoURL
+								repoURL:      platform.organization.repoURL
 								sourceBranch: "${{ outputs.push.branch }}"
 								targetBranch: "main"
 							}
@@ -124,14 +126,14 @@ Component: #Kubernetes & {
 							uses: "git-wait-for-pr"
 							as:   "merge-pr"
 							config: {
-								repoURL:  Organization.RepoURL
+								repoURL:  platform.organization.repoURL
 								prNumber: "${{ outputs.pull.prNumber }}"
 							}
 						},
 						{
 							uses: "argocd-update"
 							// Do not update the target revision, let it sync against main.
-							config: apps: [{name: "\(ProjectName)-cert-manager"}]
+							config: apps: [{name: "\(parameters.stack)-cert-manager"}]
 						},
 					]
 				}
