@@ -3,7 +3,7 @@ package holos
 import (
 	ap "argoproj.io/appproject/v1alpha1"
 
-	"example.com/holos/pkg/config/platform"
+	"holos.example/pkg/config/platform"
 )
 
 holos: Component.BuildPlan

@@ -2,7 +2,7 @@ package holos
 
 import (
 	rg "gateway.networking.k8s.io/referencegrant/v1beta1"
-	"example.com/holos/pkg/config/kargo"
+	"holos.example/pkg/config/kargo"
 )
 
 // Produce a helm chart build plan.

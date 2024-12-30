@@ -1,8 +1,8 @@
 package holos
 
 import (
-	"example.com/holos/pkg/config/kargo"
-	"example.com/holos/pkg/config/externalsecrets"
+	"holos.example/pkg/config/kargo"
+	"holos.example/pkg/config/externalsecrets"
 )
 
 // Mix the resource definitions in to the component definitions.  We keep the

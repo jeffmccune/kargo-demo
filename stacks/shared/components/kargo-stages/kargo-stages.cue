@@ -2,7 +2,7 @@
 
 package holos
 
-import "example.com/holos/pkg/config/platform"
+import "holos.example/pkg/config/platform"
 
 // _image represents the image to promote through the stages.  For example:
 // "us-central1-docker.pkg.dev/bank-of-anthos-ci/bank-of-anthos/frontend"

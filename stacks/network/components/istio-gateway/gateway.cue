@@ -1,8 +1,8 @@
 package holos
 
 import (
-	"example.com/holos/pkg/config/istio"
-	"example.com/holos/pkg/config/platform"
+	"holos.example/pkg/config/istio"
+	"holos.example/pkg/config/platform"
 )
 
 // Produce a kubernetes objects build plan.

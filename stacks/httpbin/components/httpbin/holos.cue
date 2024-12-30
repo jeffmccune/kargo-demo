@@ -1,6 +1,6 @@
 package holos
 
-import "example.com/holos/pkg/types/platform"
+import "holos.example/pkg/types/platform"
 
 let PARAMETERS = parameters
 

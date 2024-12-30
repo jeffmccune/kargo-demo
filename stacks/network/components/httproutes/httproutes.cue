@@ -2,7 +2,7 @@ package holos
 
 import (
 	"gateway.networking.k8s.io/httproute/v1"
-	"example.com/holos/pkg/config/platform"
+	"holos.example/pkg/config/platform"
 )
 
 // Produce a kubernetes objects build plan.

@@ -5,7 +5,7 @@ import (
 	"path"
 	app "argoproj.io/application/v1alpha1"
 
-	"example.com/holos/pkg/config/platform"
+	"holos.example/pkg/config/platform"
 )
 
 parameters: {

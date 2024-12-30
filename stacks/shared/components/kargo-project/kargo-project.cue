@@ -1,6 +1,6 @@
 package holos
 
-import "example.com/holos/pkg/config/platform"
+import "holos.example/pkg/config/platform"
 
 parameters: {
 	project: string @tag(project)

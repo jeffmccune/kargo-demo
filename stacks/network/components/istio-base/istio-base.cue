@@ -3,7 +3,7 @@ package holos
 import (
 	"encoding/yaml"
 	ks "sigs.k8s.io/kustomize/api/types"
-	"example.com/holos/pkg/config/istio"
+	"holos.example/pkg/config/istio"
 )
 
 // Produce a helm chart build plan.

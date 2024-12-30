@@ -1,6 +1,6 @@
 package holos
 
-import "example.com/holos/pkg/config/certmanager"
+import "holos.example/pkg/config/certmanager"
 
 // Produce a helm chart build plan.
 holos: Component.BuildPlan

@@ -1,6 +1,6 @@
 package holos
 
-import "example.com/holos/pkg/config/platform"
+import "holos.example/pkg/config/platform"
 
 // Produce a kubernetes objects build plan.
 holos: Component.BuildPlan
