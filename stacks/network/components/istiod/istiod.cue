@@ -4,7 +4,7 @@ import (
 	"encoding/yaml"
 	ks "sigs.k8s.io/kustomize/api/types"
 
-	"holos.example/pkg/config/istio"
+	"holos.example/config/istio"
 )
 
 // Produce a helm chart build plan.

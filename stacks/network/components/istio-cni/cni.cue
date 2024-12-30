@@ -1,6 +1,6 @@
 package holos
 
-import "holos.example/pkg/config/istio"
+import "holos.example/config/istio"
 
 // Produce a helm chart build plan.
 holos: Component.BuildPlan

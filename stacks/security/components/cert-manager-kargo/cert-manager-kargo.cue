@@ -3,8 +3,8 @@ package holos
 import (
 	"path"
 
-	"holos.example/pkg/config/certmanager"
-	"holos.example/pkg/config/platform"
+	"holos.example/config/certmanager"
+	"holos.example/config/platform"
 )
 
 parameters: {

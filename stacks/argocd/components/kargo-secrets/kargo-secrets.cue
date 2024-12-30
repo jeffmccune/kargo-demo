@@ -1,6 +1,6 @@
 package holos
 
-import "holos.example/pkg/config/kargo"
+import "holos.example/config/kargo"
 
 // Produce a helm chart build plan.
 holos: Component.BuildPlan

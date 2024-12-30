@@ -2,8 +2,8 @@
 package platform
 
 import (
-	"holos.example/pkg/types/platform"
-	pkg_istio "holos.example/pkg/config/istio"
+	"holos.example/types/platform"
+	pkg_istio "holos.example/config/istio"
 )
 
 versions: {

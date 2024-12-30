@@ -30,7 +30,7 @@ config: #Config & {
 	system: namespace:  "istio-system"
 	gateway: namespace: "istio-ingress"
 
-	datafile: "./pkg/config/istio/istio.yaml"
+	datafile: "./config/istio/istio.yaml"
 	chart: {
 		version: string & _istio_data.chart.version
 		repository: {
