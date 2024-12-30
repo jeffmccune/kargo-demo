@@ -12,5 +12,5 @@ spec:
     project: httpbin
     source:
         path: ./
-        repoURL: https://github.com/holos-run/kargo-demo.git
+        repoURL: https://github.com/jeffmccune/kargo-demo.git
         targetRevision: project/httpbin/component/prod-us-west-httpbin
