@@ -19,7 +19,7 @@ func TestMain(m *testing.M) {
 }
 
 func TestUnity(t *testing.T) {
-	testscript.Run(t, useDemoCodeUsersUse(filepath.Join("tests", "unity")))
+	testscript.Run(t, useDemoCodeUsersUse(filepath.Join("unity")))
 }
 
 func useDemoCodeUsersUse(dir string) testscript.Params {

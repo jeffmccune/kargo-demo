@@ -3,6 +3,7 @@ module github.com/holos-run/kargo-demo
 go 1.23.3
 
 require (
+	cuelang.org/go v0.11.1
 	github.com/holos-run/holos v0.102.1
 	github.com/rogpeppe/go-internal v1.13.1
 )
@@ -15,7 +16,6 @@ require (
 	connectrpc.com/otelconnect v0.7.0 // indirect
 	connectrpc.com/validate v0.1.0 // indirect
 	cuelabs.dev/go/oci/ociregistry v0.0.0-20240906074133-82eb438dd565 // indirect
-	cuelang.org/go v0.11.1 // indirect
 	dario.cat/mergo v1.0.1 // indirect
 	entgo.io/ent v0.13.1 // indirect
 	github.com/AdaLogics/go-fuzz-headers v0.0.0-20230811130428-ced1acdcaa24 // indirect
