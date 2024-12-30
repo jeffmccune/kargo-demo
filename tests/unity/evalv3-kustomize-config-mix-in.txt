@@ -1,11 +1,11 @@
 # spec.artifacts.0.generators.1.file present with evalv3=0
 env CUE_EXPERIMENT=embed,evalv3=0
-exec cue export --out yaml -e holos ../stacks/argocd/components/argocd-crds
+exec cue export --out yaml -e holos --inject stack=argocd ../stacks/argocd/components/argocd-crds
 cmp stdout $WORK/golden.yaml
 
 # spec.artifacts.0.generators.1.file missing with evalv3=1 (fails, should pass)
 env CUE_EXPERIMENT=embed,evalv3=1
-exec cue export --out yaml -e holos ../stacks/argocd/components/argocd-crds
+exec cue export --out yaml -e holos --inject stack=argocd ../stacks/argocd/components/argocd-crds
 cmp stdout $WORK/golden.yaml
 
 -- golden.yaml --
@@ -33,8 +33,33 @@ spec:
           output: components/no-name/no-name.gen.yaml
           kustomize:
             kustomization:
+              labels:
+                - includeSelectors: false
+                  pairs:
+                    argocd.argoproj.io/instance: argocd-no-name
               resources:
                 - resources.gen.yaml
                 - argocd-crds.2.13.2.yaml
               kind: Kustomization
               apiVersion: kustomize.config.k8s.io/v1beta1
+    - artifact: gitops/no-name.application.gen.yaml
+      generators:
+        - kind: Resources
+          output: gitops/no-name.application.gen.yaml
+          resources:
+            Application:
+              argocd-no-name:
+                apiVersion: argoproj.io/v1alpha1
+                kind: Application
+                metadata:
+                  name: argocd-no-name
+                  namespace: argocd
+                  labels: {}
+                spec:
+                  destination:
+                    server: https://kubernetes.default.svc
+                  project: argocd
+                  source:
+                    path: deploy/components/no-name
+                    repoURL: https://github.com/holos-run/kargo-demo.git
+                    targetRevision: main
