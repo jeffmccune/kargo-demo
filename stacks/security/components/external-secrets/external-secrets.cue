@@ -1,23 +1,13 @@
 package holos
 
-parameters: {
-	version: string | *"0.10.7" @tag(version)
-}
+import "holos.example/config/externalsecrets"
 
 // Produce a helm chart build plan.
 holos: Component.BuildPlan
 
 Component: #Helm & {
 	Name:      "external-secrets"
-	Namespace: "external-secrets"
-
-	Chart: {
-		version: parameters.version
-		repository: {
-			name: "external-secrets"
-			url:  "https://charts.external-secrets.io"
-		}
-	}
-
+	Namespace: externalsecrets.config.namespace
+	Chart:     externalsecrets.config.chart
 	Values: installCRDs: false
 }
