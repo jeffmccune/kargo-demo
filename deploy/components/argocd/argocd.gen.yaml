@@ -739,10 +739,9 @@ subjects:
 ---
 apiVersion: v1
 data:
-  admin.enabled: "false"
+  admin.enabled: "true"
   application.instanceLabelKey: argocd.argoproj.io/instance
   exec.enabled: "false"
-  oidc.config: '{}'
   server.rbac.log.enforce.enable: "false"
   statusbadge.enabled: "false"
   timeout.hard.reconciliation: 0s
@@ -1518,7 +1517,7 @@ spec:
             secretKeyRef:
               key: auth
               name: argocd-redis
-        image: public.ecr.aws/docker/library/redis:7.2.4-alpine
+        image: public.ecr.aws/docker/library/redis:7.4.1-alpine
         imagePullPolicy: IfNotPresent
         name: redis
         ports:
@@ -1573,7 +1572,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 35226bdcf4787b66d3eb45d392a708bb724059ec5dbfcd0f9fc1bfdaf3c2a65b
+        checksum/cm: 108ff4276075e3f7b391ba8bf18ebc527473929c85a030f5478136e6caf564a3
         checksum/cmd-params: c6b018bb1e787afa666fdd468539ac34d1615fe9ba1b82957d9441f66a89f985
       labels:
         app.kubernetes.io/component: repo-server
@@ -1948,7 +1947,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 35226bdcf4787b66d3eb45d392a708bb724059ec5dbfcd0f9fc1bfdaf3c2a65b
+        checksum/cm: 108ff4276075e3f7b391ba8bf18ebc527473929c85a030f5478136e6caf564a3
         checksum/cmd-params: c6b018bb1e787afa666fdd468539ac34d1615fe9ba1b82957d9441f66a89f985
       labels:
         app.kubernetes.io/component: server
@@ -2391,7 +2390,7 @@ spec:
   template:
     metadata:
       annotations:
-        checksum/cm: 35226bdcf4787b66d3eb45d392a708bb724059ec5dbfcd0f9fc1bfdaf3c2a65b
+        checksum/cm: 108ff4276075e3f7b391ba8bf18ebc527473929c85a030f5478136e6caf564a3
         checksum/cmd-params: c6b018bb1e787afa666fdd468539ac34d1615fe9ba1b82957d9441f66a89f985
       labels:
         app.kubernetes.io/component: application-controller
