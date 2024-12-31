@@ -3,11 +3,8 @@ package holos
 import (
 	"encoding/yaml"
 	ks "sigs.k8s.io/kustomize/api/types"
+	"holos.example/config/externalsecrets"
 )
-
-parameters: {
-	version: string | *"0.10.7" @tag(version)
-}
 
 // Produce a kustomize build plan
 holos: Component.BuildPlan
@@ -17,7 +14,7 @@ Component: #Kustomize & {
 
 	KustomizeConfig: {
 		// Resources: "https://raw.githubusercontent.com/external-secrets/external-secrets/v\(ExternalSecrets.Version)/deploy/crds/bundle.yaml": _
-		Files: "bundle.\(parameters.version).yaml": _
+		Files: "bundle.\(externalsecrets.config.chart.version).yaml": _
 		Kustomization: patches: [for x in KustomizePatches {x}]
 	}
 }
