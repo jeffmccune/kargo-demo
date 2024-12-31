@@ -32,6 +32,10 @@ stacks: #Stacks & {
 					path: "stacks/argocd/components/argocd-crds"
 					annotations: description: "argocd custom resource definitions"
 				}
+				"argocd-secrets": {
+					path: "stacks/argocd/components/argocd-secrets"
+					annotations: description: "argocd secrets needed before pods"
+				}
 				"argocd": {
 					path: "stacks/argocd/components/argocd"
 					annotations: description: "argocd controller services"
