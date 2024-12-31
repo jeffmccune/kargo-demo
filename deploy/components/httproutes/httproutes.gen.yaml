@@ -158,30 +158,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   labels:
-    app: prod-us-central-httpbin
-    argocd.argoproj.io/instance: network-httproutes
-  name: prod-us-central-httpbin
-  namespace: istio-ingress
-spec:
-  hostnames:
-  - prod-us-central-httpbin.holos.localhost
-  parentRefs:
-  - name: default
-    namespace: istio-ingress
-  rules:
-  - backendRefs:
-    - name: httpbin
-      namespace: prod-us-central-httpbin
-      port: 80
-    matches:
-    - path:
-        type: PathPrefix
-        value: /
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  labels:
     app: prod-us-central-podinfo
     argocd.argoproj.io/instance: network-httproutes
   name: prod-us-central-podinfo
@@ -206,30 +182,6 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
   labels:
-    app: prod-us-east-httpbin
-    argocd.argoproj.io/instance: network-httproutes
-  name: prod-us-east-httpbin
-  namespace: istio-ingress
-spec:
-  hostnames:
-  - prod-us-east-httpbin.holos.localhost
-  parentRefs:
-  - name: default
-    namespace: istio-ingress
-  rules:
-  - backendRefs:
-    - name: httpbin
-      namespace: prod-us-east-httpbin
-      port: 80
-    matches:
-    - path:
-        type: PathPrefix
-        value: /
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  labels:
     app: prod-us-east-podinfo
     argocd.argoproj.io/instance: network-httproutes
   name: prod-us-east-podinfo
@@ -245,30 +197,6 @@ spec:
     - name: podinfo
       namespace: prod-us-east-podinfo
       port: 9898
-    matches:
-    - path:
-        type: PathPrefix
-        value: /
----
-apiVersion: gateway.networking.k8s.io/v1
-kind: HTTPRoute
-metadata:
-  labels:
-    app: prod-us-west-httpbin
-    argocd.argoproj.io/instance: network-httproutes
-  name: prod-us-west-httpbin
-  namespace: istio-ingress
-spec:
-  hostnames:
-  - prod-us-west-httpbin.holos.localhost
-  parentRefs:
-  - name: default
-    namespace: istio-ingress
-  rules:
-  - backendRefs:
-    - name: httpbin
-      namespace: prod-us-west-httpbin
-      port: 80
     matches:
     - path:
         type: PathPrefix

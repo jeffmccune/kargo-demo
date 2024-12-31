@@ -1,10 +1,11 @@
-package holos
+package main
 
-import "github.com/holos-run/holos/api/author/v1alpha5:author"
+import v1alpha5 "github.com/holos-run/holos/api/author/v1alpha5:author"
 
-Platform: author.#Platform & {
+Platform: v1alpha5.#Platform & {
 	Name: "default"
 }
 
-// Render a Platform resource for holos to process
+// The holos render platform command processes the Platform resource configured
+// by the value of the holos field in the main package.
 holos: Platform.Resource

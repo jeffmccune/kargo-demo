@@ -39,13 +39,17 @@ if ! kubectl wait --for=condition=Ready clusterissuer/local-ca --timeout=30s; th
   exit 1
 fi
 
+# Wait for External Secrets to come online
+kubectl wait --for=condition=Available deployment/external-secrets-webhook -n external-secrets --timeout=300s
+
 # ArgoCD
+apply argocd-secrets
+kubectl wait -n argocd --for=condition=Ready externalsecrets.external-secrets.io/argocd-redis --timeout=300s
 apply argocd
 apply app-projects
 apply rollouts
 
 # Kargo
-kubectl wait --for=condition=Available deployment/external-secrets-webhook -n external-secrets --timeout=300s
 apply kargo-secrets
 apply kargo # includes crds
 
@@ -104,8 +108,10 @@ echo "  - https://kargo.holos.localhost"
 echo "  - https://podinfo.holos.localhost"
 echo "  - https://httpbin.holos.localhost"
 echo
-echo "Kargo admin password:"
+echo "Kargo and argo admin passwords:"
+echo
 echo "  kubectl get secret -n kargo admin-credentials -o json | jq --exit-status -r '.data.password | @base64d'"
+echo "  kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d"
 echo
 set -x
 

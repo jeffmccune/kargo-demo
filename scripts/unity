@@ -1,9 +1,9 @@
 #! /bin/bash
 
-# cd to the repository root
+# find the top level of the repository
 TOPLEVEL="$(cd $(dirname "$0") && cd .. && pwd)"
-cd "$TOPLEVEL"
 
 set -xeuo pipefail
 
-go test
+cd "${TOPLEVEL}/tests"
+go test ./...

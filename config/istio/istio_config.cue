@@ -1,18 +1,34 @@
 @extern(embed)
 package istio
 
-import (
-	"example.com/platform/schemas/istio"
-	"example.com/platform/schemas/platform"
-)
+import "github.com/holos-run/holos/api/core/v1alpha5:core"
 
 // Unify istio.yaml
 _istio_data: _ @embed(file=istio.yaml)
 
-// Config represents concrete configuration values for this package.
-Config: istio.#Config & {
-	System: Namespace:  "istio-system"
-	Gateway: Namespace: "istio-ingress"
+// #Config defines the configuration schema of this package.
+#Config: {
+	version: chart.version
+	system: namespace:  string
+	gateway: namespace: string
+
+	datafile: string
+
+	chart: core.#Chart & {
+		version: string
+		repository: {
+			name: string
+			url:  string
+		}
+	}
+
+	values: {...}
+}
+
+// config represents concrete configuration values for this package.
+config: #Config & {
+	system: namespace:  "istio-system"
+	gateway: namespace: "istio-ingress"
 
 	datafile: "./config/istio/istio.yaml"
 	chart: {
@@ -25,61 +41,7 @@ Config: istio.#Config & {
 
 	// Constrain Helm values for safer, easier upgrades and consistency across
 	// platform components.
-	Values: global: istioNamespace: System.Namespace
+	values: global: istioNamespace: system.namespace
 	// Configure ambient mode
-	Values: profile: "ambient"
-}
-
-// Project represents how istio integrates with the platform.  Dependencies are
-// injected as fields, the Project field contains the value assembled from the
-// dependencies.
-ProjectBuilder: platform.#ProjectBuilder & {
-	organization: _
-
-	Project: {
-		namespaces: (Config.System.Namespace):  _
-		namespaces: (Config.Gateway.Namespace): _
-		namespaces: istio: metadata: labels: "kargo.akuity.io/project": "true"
-
-		components: {
-			"istio-base": {
-				name: "istio-base"
-				path: "projects/network/components/istio-base"
-			}
-			"istiod": {
-				name: "istiod"
-				path: "projects/network/components/istiod"
-			}
-			"istio-cni": {
-				name: "istio-cni"
-				path: "projects/network/components/istio-cni"
-			}
-			"istio-ztunnel": {
-				name: "istio-ztunnel"
-				path: "projects/network/components/istio-ztunnel"
-			}
-			"istio-gateway": {
-				name: "istio-gateway"
-				path: "projects/network/components/istio-gateway"
-			}
-			"istio-kargo": {
-				name: "istio-promoter"
-				path: "components/addon-promoter"
-				parameters: {
-					KargoProjectName: "istio"
-					KargoStageName:   "main"
-					KargoDataFile:    Config.datafile
-					KargoDataKey:     "chart.version"
-					GitRepoURL:       organization.RepoURL
-					ChartName:        "base"
-					ChartRepoURL:     Config.chart.repository.url
-				}
-			}
-			"httproutes": {
-				name: "httproutes"
-				path: "projects/network/components/httproutes"
-				labels: component: "httproutes"
-			}
-		}
-	}
+	values: profile: "ambient"
 }

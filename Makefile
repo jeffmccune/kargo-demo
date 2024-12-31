@@ -9,11 +9,11 @@ default: test
 
 .PHONY: install
 install: ## Install holos to GOPATH/bin
-	go install github.com/holos-run/holos/cmd/holos
+	cd tests && go install github.com/holos-run/holos/cmd/holos
 
 .PHONY: test
 test: ## Run go test
-	go test
+	cd tests && go test
 
 .PHONY: unity
 unity: ## https://cuelabs.dev/unity/
