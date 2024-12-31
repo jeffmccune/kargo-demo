@@ -23,18 +23,26 @@ holos: Component.BuildPlan
 // This integration requires at least holos 0.101.7 to load external data from a
 // yaml file.  Kargo will bump the chart version in the yaml file.
 Component: #Kubernetes & {
+
+	let PROJECT = parameters.kargoProject
+	let STAGE = parameters.kargoStage
+
 	Resources: {
 		// The project is the same as the namespace, we adopt the namespace with the
 		// kargo.akuity.io/project: "true" label, configured by the namespaces
 		// component.
-		Project: (parameters.kargoProject): spec: promotionPolicies: [{
-			stage:                parameters.kargoStage
-			autoPromotionEnabled: true
-		}]
+		Project: (PROJECT): {
+			metadata: annotations: "link.argocd.argoproj.io/external-link": "https://kargo.holos.localhost/project/\(PROJECT)"
+			spec: promotionPolicies: [{
+				stage:                STAGE
+				autoPromotionEnabled: true
+			}]
+		}
 
-		Warehouse: (parameters.kargoProject): {
-			metadata: name:      parameters.kargoProject
-			metadata: namespace: parameters.kargoProject
+		Warehouse: (PROJECT): {
+			metadata: name:      PROJECT
+			metadata: namespace: PROJECT
+			metadata: annotations: "link.argocd.argoproj.io/external-link": "https://kargo.holos.localhost/project/\(PROJECT)/warehouse/\(PROJECT)"
 			spec: {
 				// implicit value is Automatic
 				freightCreationPolicy: "Automatic"
@@ -56,14 +64,15 @@ Component: #Kubernetes & {
 		let SRC_PATH = "./src"
 		let DATAFILE = path.Join([SRC_PATH, parameters.kargoDataFile], path.Unix)
 
-		Stage: (parameters.kargoStage): {
-			metadata: name:      parameters.kargoStage
-			metadata: namespace: parameters.kargoProject
+		Stage: (STAGE): {
+			metadata: name:      STAGE
+			metadata: namespace: PROJECT
+			metadata: annotations: "link.argocd.argoproj.io/external-link": "https://kargo.holos.localhost/project/\(PROJECT)/stage/\(STAGE)"
 			spec: {
 				requestedFreight: [{
 					origin: {
 						kind: "Warehouse"
-						name: Warehouse[parameters.kargoProject].metadata.name
+						name: Warehouse[PROJECT].metadata.name
 					}
 					sources: direct: true
 				}]
@@ -90,7 +99,7 @@ Component: #Kubernetes & {
 								updates: [{
 									key: parameters.kargoDataKey
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(parameters.kargoProject)')).Version }}"
+									value: "${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)')).Version }}"
 								}]
 							}
 						},
@@ -100,7 +109,7 @@ Component: #Kubernetes & {
 							as:   "commit"
 							config: {
 								path:    SRC_PATH
-								message: "\(parameters.kargoProject): update to ${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(parameters.kargoProject)')).Version }}"
+								message: "\(PROJECT): update to ${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)')).Version }}"
 							}
 						},
 						{
@@ -127,5 +136,13 @@ Component: #Kubernetes & {
 			}
 		}
 
+	}
+
+	_ArgoApplication: {
+		metadata: annotations: "link.argocd.argoproj.io/external-link": "https://kargo.holos.localhost/project/\(PROJECT)"
+		spec: info: [{
+			name:  "Kargo Project"
+			value: "https://kargo.holos.localhost/project/\(PROJECT)"
+		}]
 	}
 }
