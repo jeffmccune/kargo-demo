@@ -29,7 +29,7 @@ apiVersion: v1
 metadata:
   labels:
     kargo.akuity.io/cred-type: git
-  name: holos-local-cluster-git-creds
+  name: git-creds-gh-app-${GITHUB_APP_INSTALL_ID}
   namespace: kargo
 type: Opaque
 stringData:
@@ -39,9 +39,11 @@ stringData:
   repoURL: "${GITHUB_APP_REPO_URL}"
 EOF
 
-cp kargo.yaml "${CAROOT}/kargo.yaml"
+mkdir -p "${CAROOT}/manifests"
+cp kargo.yaml "${CAROOT}/manifests/kargo-gh-app-${GITHUB_APP_INSTALL_ID}.yaml"
 
 echo "Secret created, apply with:" >&2
-echo "  kubectl apply -f '${CAROOT}/kargo.yaml'" >&2
+echo >&2
+echo '  kubectl apply -f "$(mkcert -CAROOT)/manifests"' >&2
 echo >&2
 echo "The reset-cluster script will automatically apply this secret going forward." >&2
