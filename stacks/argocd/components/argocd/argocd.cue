@@ -40,7 +40,7 @@ Component: #Helm & {
 		}]
 	}
 
-	Values: #Values & {
+	Values: {
 		kubeVersionOverride: "1.29.0"
 		// handled in the argo-crds component
 		crds: install: false
@@ -51,8 +51,7 @@ Component: #Helm & {
 		configs: params: "server.insecure": true
 
 		configs: cm: {
-			"admin.enabled":           false
-			"oidc.config":             "{}"
+			"admin.enabled":           true
 			"users.anonymous.enabled": "true"
 		}
 
