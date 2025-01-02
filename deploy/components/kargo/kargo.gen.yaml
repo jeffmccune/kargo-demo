@@ -3111,7 +3111,7 @@ spec:
                             constraints, which means the latest semantically tagged version of an image
                             will always be used. Care should be taken with leaving this field
                             unspecified, as it can lead to the unanticipated rollout of breaking
-                            changes. Refer to Image Updater documentation for more details.
+                            changes.
                             More info: https://github.com/masterminds/semver#checking-version-constraints
                           type: string
                         strictSemvers:
@@ -3411,9 +3411,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-admin
   namespace: kargo
 ---
@@ -3425,9 +3425,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api
   namespace: kargo
 ---
@@ -3439,9 +3439,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller
   namespace: kargo
 ---
@@ -3453,9 +3453,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-garbage-collector
   namespace: kargo
 ---
@@ -3467,9 +3467,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-management-controller
   namespace: kargo
 ---
@@ -3480,9 +3480,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-viewer
   namespace: kargo
 ---
@@ -3494,9 +3494,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server
   namespace: kargo
 ---
@@ -3507,9 +3507,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-admin
 rules:
 - apiGroups:
@@ -3587,9 +3587,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api
 rules:
 - apiGroups:
@@ -3707,9 +3707,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api-rollouts
 rules:
 - apiGroups:
@@ -3729,9 +3729,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller
 rules:
 - apiGroups:
@@ -3804,9 +3804,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller-argocd
 rules:
 - apiGroups:
@@ -3827,9 +3827,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller-rollouts
 rules:
 - apiGroups:
@@ -3860,9 +3860,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-garbage-collector
 rules:
 - apiGroups:
@@ -3907,9 +3907,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-management-controller
 rules:
 - apiGroups:
@@ -3961,9 +3961,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-project-admin
 rules:
 - apiGroups:
@@ -3989,9 +3989,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-viewer
 rules:
 - apiGroups:
@@ -4043,9 +4043,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server
 rules:
 - apiGroups:
@@ -4113,9 +4113,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server-generic-gc
 rules:
 - apiGroups:
@@ -4133,9 +4133,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server-ns-controller
 rules:
 - apiGroups:
@@ -4152,9 +4152,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4173,9 +4173,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4194,9 +4194,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api-rollouts
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4215,9 +4215,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4236,9 +4236,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller-argocd
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4257,9 +4257,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller-rollouts
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4278,9 +4278,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-garbage-collector
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4299,9 +4299,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-management-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4319,9 +4319,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-viewer
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4340,9 +4340,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4361,9 +4361,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server-generic-gc
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4382,9 +4382,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server-ns-controller
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -4413,9 +4413,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api
   namespace: kargo
 ---
@@ -4443,9 +4443,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller
   namespace: kargo
 ---
@@ -4464,9 +4464,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-garbage-collector
   namespace: kargo
 ---
@@ -4485,9 +4485,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-management-controller
   namespace: kargo
 ---
@@ -4503,9 +4503,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server
   namespace: kargo
 ---
@@ -4517,9 +4517,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api
   namespace: kargo
 spec:
@@ -4541,9 +4541,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server
   namespace: kargo
 spec:
@@ -4565,9 +4565,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-api
   namespace: kargo
 spec:
@@ -4589,8 +4589,8 @@ spec:
         app.kubernetes.io/instance: kargo
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: kargo
-        app.kubernetes.io/version: v1.1.1
-        helm.sh/chart: kargo-1.1.1
+        app.kubernetes.io/version: v1.1.2
+        helm.sh/chart: kargo-1.1.2
     spec:
       containers:
       - command:
@@ -4612,7 +4612,7 @@ spec:
             name: kargo-api
         - secretRef:
             name: admin-credentials
-        image: ghcr.io/akuity/kargo:v1.1.1
+        image: ghcr.io/akuity/kargo:v1.1.2
         imagePullPolicy: IfNotPresent
         livenessProbe:
           exec:
@@ -4642,9 +4642,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-controller
   namespace: kargo
 spec:
@@ -4665,8 +4665,8 @@ spec:
         app.kubernetes.io/instance: kargo
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: kargo
-        app.kubernetes.io/version: v1.1.1
-        helm.sh/chart: kargo-1.1.1
+        app.kubernetes.io/version: v1.1.2
+        helm.sh/chart: kargo-1.1.2
     spec:
       containers:
       - args:
@@ -4689,7 +4689,7 @@ spec:
         envFrom:
         - configMapRef:
             name: kargo-controller
-        image: ghcr.io/akuity/kargo:v1.1.1
+        image: ghcr.io/akuity/kargo:v1.1.2
         imagePullPolicy: IfNotPresent
         name: controller
         resources: {}
@@ -4703,9 +4703,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-management-controller
   namespace: kargo
 spec:
@@ -4747,7 +4747,7 @@ spec:
         envFrom:
         - configMapRef:
             name: kargo-management-controller
-        image: ghcr.io/akuity/kargo:v1.1.1
+        image: ghcr.io/akuity/kargo:v1.1.2
         imagePullPolicy: IfNotPresent
         name: management-controller
         resources: {}
@@ -4761,9 +4761,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-webhooks-server
   namespace: kargo
 spec:
@@ -4784,8 +4784,8 @@ spec:
         app.kubernetes.io/instance: kargo
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: kargo
-        app.kubernetes.io/version: v1.1.1
-        helm.sh/chart: kargo-1.1.1
+        app.kubernetes.io/version: v1.1.2
+        helm.sh/chart: kargo-1.1.2
     spec:
       containers:
       - args:
@@ -4808,7 +4808,7 @@ spec:
         envFrom:
         - configMapRef:
             name: kargo-webhooks-server
-        image: ghcr.io/akuity/kargo:v1.1.1
+        image: ghcr.io/akuity/kargo:v1.1.2
         imagePullPolicy: IfNotPresent
         name: webhooks-server
         ports:
@@ -4835,9 +4835,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo-garbage-collector
   namespace: kargo
 spec:
@@ -4851,8 +4851,8 @@ spec:
         app.kubernetes.io/instance: kargo
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: kargo
-        app.kubernetes.io/version: v1.1.1
-        helm.sh/chart: kargo-1.1.1
+        app.kubernetes.io/version: v1.1.2
+        helm.sh/chart: kargo-1.1.2
     spec:
       template:
         metadata:
@@ -4863,8 +4863,8 @@ spec:
             app.kubernetes.io/instance: kargo
             app.kubernetes.io/managed-by: Helm
             app.kubernetes.io/name: kargo
-            app.kubernetes.io/version: v1.1.1
-            helm.sh/chart: kargo-1.1.1
+            app.kubernetes.io/version: v1.1.2
+            helm.sh/chart: kargo-1.1.2
         spec:
           containers:
           - args:
@@ -4887,7 +4887,7 @@ spec:
             envFrom:
             - configMapRef:
                 name: kargo-garbage-collector
-            image: ghcr.io/akuity/kargo:v1.1.1
+            image: ghcr.io/akuity/kargo:v1.1.2
             imagePullPolicy: IfNotPresent
             name: garbage-collector
             resources: {}
@@ -4946,9 +4946,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo
 webhooks:
 - admissionReviewVersions:
@@ -5046,9 +5046,9 @@ metadata:
     app.kubernetes.io/instance: kargo
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: kargo
-    app.kubernetes.io/version: v1.1.1
+    app.kubernetes.io/version: v1.1.2
     argocd.argoproj.io/instance: argocd-kargo
-    helm.sh/chart: kargo-1.1.1
+    helm.sh/chart: kargo-1.1.2
   name: kargo
 webhooks:
 - admissionReviewVersions:
