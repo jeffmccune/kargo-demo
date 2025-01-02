@@ -4,6 +4,7 @@ package platform
 import (
 	"holos.example/types/platform"
 	"holos.example/config/kargo"
+	"holos.example/config/externalsecrets"
 	pkg_istio "holos.example/config/istio"
 )
 
@@ -142,8 +143,8 @@ stacks: #Stacks & {
 
 	security: (#StackBuilder & {
 		stack: namespaces: {
-			"cert-manager": metadata: labels: "kargo.akuity.io/project": "true"
-			"external-secrets": _
+			"cert-manager": metadata: labels: "kargo.akuity.io/project":     "true"
+			"external-secrets": metadata: labels: "kargo.akuity.io/project": "true"
 		}
 		parameters: {
 			name: "security"
@@ -159,6 +160,19 @@ stacks: #Stacks & {
 				"external-secrets": {
 					path: "stacks/security/components/external-secrets"
 					annotations: description: "external secrets custom resource definitions"
+				}
+				"external-secrets-promoter": {
+					name: "external-secrets-promoter"
+					path: "stacks/shared/components/addon-promoter"
+					parameters: {
+						kargoProject:  "external-secrets"
+						kargoStage:    "main"
+						kargoDataFile: externalsecrets.config.datafile
+						kargoDataKey:  "chart.version"
+						gitRepoURL:    organization.repoURL
+						chartName:     externalsecrets.config.chart.name
+						chartRepoURL:  externalsecrets.config.chart.repository.url
+					}
 				}
 				"cert-manager": {
 					path: "stacks/security/components/cert-manager"
