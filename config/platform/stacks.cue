@@ -21,15 +21,18 @@ stacks: #Stacks
 	}
 	stack: #Stack & {
 		metadata: name: parameters.name
+		let STACK_NAME = metadata.name
 
 		for KEY, COMPONENT in parameters.components {
-			components: "stacks:\(metadata.name):components:\(KEY)": COMPONENT & {
+			components: "stacks:\(STACK_NAME):components:\(KEY)": COMPONENT & {
 				name: KEY
-				let STACK_NAME = stack.metadata.name
+				// Labels to select specific stacks when rendering.
 				labels: "holos.run/stack.name":     STACK_NAME
 				labels: "holos.run/component.name": name
 				// Pass the stack name as a parameter for use with componentconfig.argocd.cue
 				parameters: stack: STACK_NAME
+				// Configure how the holos cli displays the rendered ... in ... log lines.
+				annotations: "app.holos.run/description": "\(name) for stack \(STACK_NAME)"
 			}
 		}
 	}

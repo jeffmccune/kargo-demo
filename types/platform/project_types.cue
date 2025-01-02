@@ -80,6 +80,12 @@ import stage "kargo.akuity.io/stage/v1alpha1"
 						stack:         PROJECT_NAME
 						outputBaseDir: "projects/\(PROJECT_NAME)"
 					}
+					// Labels to select specific stacks when rendering.
+					labels: "holos.run/stack.name":     PROJECT_NAME
+					labels: "holos.run/component.name": COMPONENT.name
+					labels: "holos.run/project.name":   PROJECT_NAME
+					// Configure how the holos cli displays the rendered ... in ... log lines.
+					annotations: "app.holos.run/description": "\(COMPONENT.name) for project \(PROJECT_NAME)"
 				}
 			}
 
