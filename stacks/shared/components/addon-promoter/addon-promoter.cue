@@ -153,6 +153,7 @@ Component: #Kubernetes & {
 
 	_ArgoApplication: {
 		metadata: annotations: "link.argocd.argoproj.io/external-link": "https://kargo.holos.localhost/project/\(PROJECT)"
+		metadata: labels: "kargo.project":                              PROJECT
 		spec: info: [{
 			name:  "Kargo Project"
 			value: "https://kargo.holos.localhost/project/\(PROJECT)"

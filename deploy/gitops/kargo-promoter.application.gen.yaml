@@ -3,7 +3,8 @@ kind: Application
 metadata:
     annotations:
         link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/kargo
-    labels: {}
+    labels:
+        kargo.project: kargo
     name: argocd-kargo-promoter
     namespace: argocd
 spec:
