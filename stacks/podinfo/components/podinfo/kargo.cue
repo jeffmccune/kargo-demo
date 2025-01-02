@@ -12,6 +12,7 @@ Component: {
 
 	_ArgoApplication: {
 		metadata: annotations: "kargo.akuity.io/authorized-stage": "\(parameters.project):\(parameters.stage)"
+		metadata: labels: "kargo.stage":                           parameters.stage
 		spec: source: {
 			path:           "./"
 			targetRevision: "project/\(parameters.project)/component/\(Name)"

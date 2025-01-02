@@ -3,7 +3,8 @@ kind: Application
 metadata:
     annotations:
         kargo.akuity.io/authorized-stage: httpbin:uat
-    labels: {}
+    labels:
+        kargo.stage: uat
     name: httpbin-uat-httpbin
     namespace: argocd
 spec:

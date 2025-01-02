@@ -3,7 +3,8 @@ kind: Application
 metadata:
     annotations:
         kargo.akuity.io/authorized-stage: httpbin:prod-us-west
-    labels: {}
+    labels:
+        kargo.stage: prod-us-west
     name: httpbin-prod-us-west-httpbin
     namespace: argocd
 spec:

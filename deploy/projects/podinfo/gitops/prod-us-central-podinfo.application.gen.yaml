@@ -3,7 +3,8 @@ kind: Application
 metadata:
     annotations:
         kargo.akuity.io/authorized-stage: podinfo:prod-us-central
-    labels: {}
+    labels:
+        kargo.stage: prod-us-central
     name: podinfo-prod-us-central-podinfo
     namespace: argocd
 spec:
