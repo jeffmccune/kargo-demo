@@ -1,8 +1,10 @@
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Project
 metadata:
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/cert-manager
   labels:
-    argocd.argoproj.io/instance: security-cert-manager-kargo
+    argocd.argoproj.io/instance: security-cert-manager-promoter
   name: cert-manager
 spec:
   promotionPolicies:
@@ -12,8 +14,10 @@ spec:
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Stage
 metadata:
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/cert-manager/stage/main
   labels:
-    argocd.argoproj.io/instance: security-cert-manager-kargo
+    argocd.argoproj.io/instance: security-cert-manager-promoter
   name: main
   namespace: cert-manager
 spec:
@@ -51,15 +55,6 @@ spec:
           sourceBranch: ${{ outputs.push.branch }}
           targetBranch: main
         uses: git-open-pr
-      - as: merge-pr
-        config:
-          prNumber: ${{ outputs.pull.prNumber }}
-          repoURL: https://github.com/holos-run/kargo-demo.git
-        uses: git-wait-for-pr
-      - config:
-          apps:
-          - name: security-cert-manager
-        uses: argocd-update
   requestedFreight:
   - origin:
       kind: Warehouse
@@ -70,8 +65,10 @@ spec:
 apiVersion: kargo.akuity.io/v1alpha1
 kind: Warehouse
 metadata:
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/cert-manager/warehouse/cert-manager
   labels:
-    argocd.argoproj.io/instance: security-cert-manager-kargo
+    argocd.argoproj.io/instance: security-cert-manager-promoter
   name: cert-manager
   namespace: cert-manager
 spec:

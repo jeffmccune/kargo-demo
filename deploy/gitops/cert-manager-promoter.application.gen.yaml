@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    annotations:
+        link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/cert-manager
+    labels:
+        kargo.project: cert-manager
+    name: security-cert-manager-promoter
+    namespace: argocd
+spec:
+    destination:
+        server: https://kubernetes.default.svc
+    info:
+        - name: Kargo Project
+          value: https://kargo.holos.localhost/project/cert-manager
+    project: security
+    source:
+        path: deploy/components/cert-manager-promoter
+        repoURL: https://github.com/holos-run/kargo-demo.git
+        targetRevision: main
