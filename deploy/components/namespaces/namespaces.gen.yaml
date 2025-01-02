@@ -92,6 +92,7 @@ kind: Namespace
 metadata:
   labels:
     argocd.argoproj.io/instance: security-namespaces
+    kargo.akuity.io/project: "true"
     kubernetes.io/metadata.name: kargo
   name: kargo
 ---

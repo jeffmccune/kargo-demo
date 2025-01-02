@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+    annotations:
+        link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/kargo
+    labels: {}
+    name: argocd-kargo-promoter
+    namespace: argocd
+spec:
+    destination:
+        server: https://kubernetes.default.svc
+    info:
+        - name: Kargo Project
+          value: https://kargo.holos.localhost/project/kargo
+    project: argocd
+    source:
+        path: deploy/components/kargo-promoter
+        repoURL: https://github.com/holos-run/kargo-demo.git
+        targetRevision: main

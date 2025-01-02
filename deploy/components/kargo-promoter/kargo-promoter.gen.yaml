@@ -1,0 +1,80 @@
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Project
+metadata:
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/kargo
+  labels:
+    argocd.argoproj.io/instance: argocd-kargo-promoter
+  name: kargo
+spec:
+  promotionPolicies:
+  - autoPromotionEnabled: true
+    stage: main
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Stage
+metadata:
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/kargo/stage/main
+  labels:
+    argocd.argoproj.io/instance: argocd-kargo-promoter
+  name: main
+  namespace: kargo
+spec:
+  promotionTemplate:
+    spec:
+      steps:
+      - config:
+          checkout:
+          - branch: main
+            path: ./src
+          repoURL: https://github.com/holos-run/kargo-demo.git
+        uses: git-clone
+      - as: update
+        config:
+          path: src/config/kargo/kargo.yaml
+          updates:
+          - key: chart.version
+            value: ${{ chartFrom('oci://ghcr.io/akuity/kargo-charts/kargo', 'kargo',
+              warehouse('kargo')).Version }}
+        uses: yaml-update
+      - as: commit
+        config:
+          message: 'kargo: update to ${{ chartFrom(''oci://ghcr.io/akuity/kargo-charts/kargo'',
+            ''kargo'', warehouse(''kargo'')).Version }}'
+          path: ./src
+        uses: git-commit
+      - as: push
+        config:
+          generateTargetBranch: true
+          path: ./src
+        uses: git-push
+      - as: pull
+        config:
+          repoURL: https://github.com/holos-run/kargo-demo.git
+          sourceBranch: ${{ outputs.push.branch }}
+          targetBranch: main
+        uses: git-open-pr
+  requestedFreight:
+  - origin:
+      kind: Warehouse
+      name: kargo
+    sources:
+      direct: true
+---
+apiVersion: kargo.akuity.io/v1alpha1
+kind: Warehouse
+metadata:
+  annotations:
+    link.argocd.argoproj.io/external-link: https://kargo.holos.localhost/project/kargo/warehouse/kargo
+  labels:
+    argocd.argoproj.io/instance: argocd-kargo-promoter
+  name: kargo
+  namespace: kargo
+spec:
+  freightCreationPolicy: Automatic
+  interval: 5m0s
+  subscriptions:
+  - chart:
+      name: kargo
+      repoURL: oci://ghcr.io/akuity/kargo-charts/kargo

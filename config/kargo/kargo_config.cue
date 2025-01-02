@@ -1,21 +1,42 @@
+@extern(embed)
 package kargo
 
 import (
 	project "kargo.akuity.io/project/v1alpha1"
 	warehouse "kargo.akuity.io/warehouse/v1alpha1"
 	stage "kargo.akuity.io/stage/v1alpha1"
+	"github.com/holos-run/holos/api/core/v1alpha5:core"
 )
+
+// Unify data file
+_kargo_data: _ @embed(file=kargo.yaml)
 
 // config definition
 #Config: {
 	namespace: string
 	version:   string | *"1.1.1"
 	values: {...}
+
+	datafile: string
+
+	chart: core.#Chart & {
+		version: string
+		repository: {
+			name: string
+			url:  string
+		}
+	}
 }
 
 // config values
 config: #Config & {
 	namespace: "kargo"
+
+	datafile: "./config/kargo/kargo.yaml"
+	chart: {
+		name:    "oci://ghcr.io/akuity/kargo-charts/kargo"
+		version: string & _kargo_data.chart.version
+	}
 
 	// Holos specific kustomizations
 	values: #KargoValues & {
