@@ -14,8 +14,11 @@ jobs:
       - name: Render manifests with Holos
         uses: holos-run/holos-action@v1
         with:
-          version: v0.102.2
+          # Inject the repository owner as a cue build tag to automatically
+          # configure the correct github fork remote url for gitops.
+          # For example: https://github.com/holos-run/kargo-demo/blob/v0.0.12/config/platform/organization_jeff.cue
           command: holos render platform --inject=${{ github.repository_owner }}
+          version: v0.102.2
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions'
