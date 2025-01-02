@@ -3,6 +3,7 @@ package platform
 
 import (
 	"holos.example/types/platform"
+	"holos.example/config/kargo"
 	pkg_istio "holos.example/config/istio"
 )
 
@@ -19,8 +20,8 @@ stacks: #Stacks & {
 	argocd: (#StackBuilder & {
 		stack: {
 			namespaces: {
-				argocd:          _
-				kargo:           _
+				argocd: _
+				kargo: metadata: labels: "kargo.akuity.io/project": "true"
 				"argo-rollouts": _
 			}
 		}
@@ -61,6 +62,19 @@ stacks: #Stacks & {
 				"kargo": {
 					path: "stacks/argocd/components/kargo"
 					annotations: description: "kargo controllers and crds"
+				}
+				"kargo-promoter": {
+					name: "kargo-promoter"
+					path: "stacks/shared/components/addon-promoter"
+					parameters: {
+						kargoProject:  "kargo"
+						kargoStage:    "main"
+						kargoDataFile: kargo.config.datafile
+						kargoDataKey:  "chart.version"
+						gitRepoURL:    organization.repoURL
+						chartName:     "kargo"
+						chartRepoURL:  kargo.config.chart.name
+					}
 				}
 			}
 		}

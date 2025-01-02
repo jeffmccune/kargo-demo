@@ -54,8 +54,10 @@ Component: #Kubernetes & {
 						// because the pipeline submits a pull request that must be manually
 						// reviewed and approved.  The purpose is to automate the process of
 						// showing the platform engineer what will change.
-						name:    parameters.chartName
 						repoURL: parameters.chartRepoURL
+						if repoURL !~ "^oci://" {
+							name: parameters.chartName
+						}
 					}
 				}]
 			}
@@ -63,6 +65,17 @@ Component: #Kubernetes & {
 
 		let SRC_PATH = "./src"
 		let DATAFILE = path.Join([SRC_PATH, parameters.kargoDataFile], path.Unix)
+
+		// Change how use use expressions if we're using an oci chart or not.
+		let EXPRESSIONS = {
+			// https://docs.kargo.io/references/expression-language/#chartfrom
+			if parameters.chartRepoURL !~ "^oci://" {
+				chartFrom: "chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)'))"
+			}
+			if parameters.chartRepoURL =~ "^oci://" {
+				chartFrom: "chartFrom('\(parameters.chartRepoURL)', warehouse('\(PROJECT)'))"
+			}
+		}
 
 		Stage: (STAGE): {
 			metadata: name:      STAGE
@@ -99,7 +112,7 @@ Component: #Kubernetes & {
 								updates: [{
 									key: parameters.kargoDataKey
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)')).Version }}"
+									value: "${{ \(EXPRESSIONS.chartFrom).Version }}"
 								}]
 							}
 						},
@@ -109,7 +122,7 @@ Component: #Kubernetes & {
 							as:   "commit"
 							config: {
 								path:    SRC_PATH
-								message: "\(PROJECT): update to ${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)')).Version }}"
+								message: "\(PROJECT): update to ${{ \(EXPRESSIONS.chartFrom).Version }}"
 							}
 						},
 						{

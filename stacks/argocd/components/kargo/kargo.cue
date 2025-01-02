@@ -13,11 +13,12 @@ Component: #Helm & {
 	Namespace: kargo.config.namespace
 
 	Chart: {
-		name:    "oci://ghcr.io/akuity/kargo-charts/kargo"
-		version: kargo.config.version
 		release: Name
+		name:    kargo.config.chart.name
+		version: kargo.config.chart.version
 	}
 	EnableHooks: true
+	Values:      kargo.config.values
 
 	// Mix-in resources.
 	Resources: [_]: [_]: metadata: namespace: Namespace
@@ -35,6 +36,4 @@ Component: #Helm & {
 			kind:  "Service"
 		}]
 	}
-
-	Values: kargo.config.values
 }
