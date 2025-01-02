@@ -5,19 +5,20 @@ on:
       - 'kargo/promotion/*'
 jobs:
   holos:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: write
     steps:
       - uses: actions/checkout@v4
       - run: rm -rf deploy
-      - uses: holos-run/holos-action@v1
+      - name: Render manifests with Holos
+        uses: holos-run/holos-action@v1
         with:
+          version: v0.102.2
           command: holos render platform --inject=${{ github.repository_owner }}
       - name: Commit and push changes
         run: |
           git config --global user.name 'GitHub Actions'
           git config --global user.email 'actions@github.com'
           git add deploy
-          git commit -m "holos render platform [skip ci]" || echo "No changes to commit"
-          git push
+          git commit -m "holos render platform [skip ci]" && git push || echo "No changes to commit and push"
