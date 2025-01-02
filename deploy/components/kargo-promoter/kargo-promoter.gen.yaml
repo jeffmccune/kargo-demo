@@ -35,8 +35,8 @@ spec:
           path: src/config/kargo/kargo.yaml
           updates:
           - key: chart.version
-            value: ${{ chartFrom('oci://ghcr.io/akuity/kargo-charts/kargo', 'kargo',
-              warehouse('kargo')).Version }}
+            value: ${{ chartFrom('oci://ghcr.io/akuity/kargo-charts/kargo', warehouse('kargo')).Version
+              }}
         uses: yaml-update
       - as: commit
         config:
@@ -76,5 +76,4 @@ spec:
   interval: 5m0s
   subscriptions:
   - chart:
-      name: kargo
       repoURL: oci://ghcr.io/akuity/kargo-charts/kargo

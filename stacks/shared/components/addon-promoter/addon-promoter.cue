@@ -54,8 +54,10 @@ Component: #Kubernetes & {
 						// because the pipeline submits a pull request that must be manually
 						// reviewed and approved.  The purpose is to automate the process of
 						// showing the platform engineer what will change.
-						name:    parameters.chartName
 						repoURL: parameters.chartRepoURL
+						if repoURL !~ "^oci://" {
+							name: parameters.chartName
+						}
 					}
 				}]
 			}
@@ -99,7 +101,12 @@ Component: #Kubernetes & {
 								updates: [{
 									key: parameters.kargoDataKey
 									// https://docs.kargo.io/references/expression-language/#chartfrom
-									value: "${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)')).Version }}"
+									if parameters.chartRepoURL !~ "^oci://" {
+										value: "${{ chartFrom('\(parameters.chartRepoURL)', '\(parameters.chartName)', warehouse('\(PROJECT)')).Version }}"
+									}
+									if parameters.chartRepoURL =~ "^oci://" {
+										value: "${{ chartFrom('\(parameters.chartRepoURL)', warehouse('\(PROJECT)')).Version }}"
+									}
 								}]
 							}
 						},
