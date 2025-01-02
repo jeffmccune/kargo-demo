@@ -4,7 +4,8 @@ metadata:
     annotations:
         kargo.akuity.io/authorized-stage: podinfo:prod-us-west
     labels:
-        kargo.stage: prod-us-west
+        stage: prod-us-west
+        tier: prod
     name: podinfo-prod-us-west-podinfo
     namespace: argocd
 spec:

@@ -4,7 +4,8 @@ metadata:
     annotations:
         kargo.akuity.io/authorized-stage: httpbin:prod-us-west
     labels:
-        kargo.stage: prod-us-west
+        stage: prod-us-west
+        tier: prod
     name: httpbin-prod-us-west-httpbin
     namespace: argocd
 spec:

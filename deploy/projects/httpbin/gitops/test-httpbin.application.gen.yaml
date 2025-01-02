@@ -4,7 +4,8 @@ metadata:
     annotations:
         kargo.akuity.io/authorized-stage: httpbin:test
     labels:
-        kargo.stage: test
+        stage: test
+        tier: nonprod
     name: httpbin-test-httpbin
     namespace: argocd
 spec:

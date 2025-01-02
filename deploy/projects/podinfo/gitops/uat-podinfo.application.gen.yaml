@@ -4,7 +4,8 @@ metadata:
     annotations:
         kargo.akuity.io/authorized-stage: podinfo:uat
     labels:
-        kargo.stage: uat
+        stage: uat
+        tier: nonprod
     name: podinfo-uat-podinfo
     namespace: argocd
 spec:

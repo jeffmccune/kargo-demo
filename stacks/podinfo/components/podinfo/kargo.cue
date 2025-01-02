@@ -1,7 +1,10 @@
 @if(!NoKargo)
 package holos
 
-import ks "sigs.k8s.io/kustomize/api/types"
+import (
+	ks "sigs.k8s.io/kustomize/api/types"
+	"holos.example/config/platform"
+)
 
 // Configure the ArgoCD Application to allow updates from Kargo.  Configure a
 // stub kustomization.yaml artifact in the output directory for Kargo to edit.
@@ -12,7 +15,8 @@ Component: {
 
 	_ArgoApplication: {
 		metadata: annotations: "kargo.akuity.io/authorized-stage": "\(parameters.project):\(parameters.stage)"
-		metadata: labels: "kargo.stage":                           parameters.stage
+		metadata: labels: "stage":                                 parameters.stage
+		metadata: labels: "tier":                                  platform.stages[parameters.stage].tier
 		spec: source: {
 			path:           "./"
 			targetRevision: "project/\(parameters.project)/component/\(Name)"
