@@ -3,15 +3,6 @@ package platform
 import pkg_istio "holos.example/config/istio"
 
 stacks: network: (#StackBuilder & {
-	(#PromoterBuilder & {parameters: {
-		name: "istio"
-		config: {
-			datafile: pkg_istio.config.datafile
-			chart: name:       "base"
-			chart: repository: pkg_istio.config.chart.repository
-		}
-	}}).promoter
-
 	stack: namespaces: {
 		(pkg_istio.config.gateway.namespace): _
 		(pkg_istio.config.system.namespace):  _
