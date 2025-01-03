@@ -98,7 +98,7 @@ applyProject httpbin kargo-project
 applyProject httpbin kargo-stages
 # Kargo promoter components for cluster add-ons
 apply cert-manager-promoter
-apply external-secrets-promoter
+# apply external-secrets-promoter
 # apply istio-promoter
 
 set +x
