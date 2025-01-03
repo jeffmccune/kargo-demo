@@ -1,0 +1,53 @@
+# Works with evalv3=0
+env CUE_EXPERIMENT=embed,evalv3=0
+exec cue vet -c .
+
+# Works with evalv3=1
+env CUE_EXPERIMENT=embed,evalv3=1
+exec cue vet -c .
+
+# I expected this test case to trigger the 4 minute bug we saw in commit
+# c6a1b24 but it does not with cue 0.11.1
+
+-- httproutes.cue --
+package p
+
+import (
+	"list"
+	v1 "gateway.networking.k8s.io/httproute/v1"
+)
+
+platform: organization: domain: "holos.localhost"
+
+HTTPRoutes: [NAME=string]: v1.#HTTPRoute & {
+	metadata: name:      NAME
+	metadata: namespace: "istio-ingress"
+	metadata: labels: app:                           NAME
+	metadata: labels: "argocd.argoproj.io/instance": "network-httproutes"
+	_backendRefs: [NAME=string]: {
+		name:      string | *"some-service"
+		namespace: NAME
+		port:      uint16 | *80
+	}
+	spec: {
+		hostnames: ["\(NAME).\(platform.organization.domain)"]
+		parentRefs: [{
+			name:      "default"
+			namespace: "istio-ingress"
+		}]
+		rules: [{
+			backendRefs: [for x in _backendRefs {x}]
+			matches: [{path: {type: "PathPrefix", value: "/"}}]
+		}]
+	}
+}
+
+let REFS = {
+	default: name: "my-service"
+}
+
+for idx, _ in list.Repeat([1], 1000) {
+	HTTPRoutes: "route\(idx)": _backendRefs: REFS & {
+		default: port: 8080
+	}
+}
