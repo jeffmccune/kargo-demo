@@ -6,10 +6,21 @@ import (
 )
 
 stacks: security: (#StackBuilder & {
-	stack: namespaces: {
-		"cert-manager": metadata: labels: "kargo.akuity.io/project":     "true"
-		"external-secrets": metadata: labels: "kargo.akuity.io/project": "true"
-	}
+	(#PromoterBuilder & {parameters: {
+		name: "cert-manager"
+		config: {
+			datafile: certmanager.config.datafile
+			chart:    certmanager.config.chart
+		}
+	}}).promoter
+	(#PromoterBuilder & {parameters: {
+		name: "external-secrets"
+		config: {
+			datafile: externalsecrets.config.datafile
+			chart:    externalsecrets.config.chart
+		}
+	}}).promoter
+
 	parameters: {
 		name: "security"
 		components: {
@@ -25,19 +36,6 @@ stacks: security: (#StackBuilder & {
 				path: "stacks/security/components/external-secrets"
 				annotations: description: "external secrets custom resource definitions"
 			}
-			"external-secrets-promoter": {
-				name: "external-secrets-promoter"
-				path: "stacks/shared/components/addon-promoter"
-				parameters: {
-					kargoProject:  "external-secrets"
-					kargoStage:    "main"
-					kargoDataFile: externalsecrets.config.datafile
-					kargoDataKey:  "chart.version"
-					gitRepoURL:    organization.repoURL
-					chartName:     externalsecrets.config.chart.name
-					chartRepoURL:  externalsecrets.config.chart.repository.url
-				}
-			}
 			"cert-manager": {
 				path: "stacks/security/components/cert-manager"
 				annotations: description: "cert-manager operator and custom resource definitions"
@@ -49,19 +47,6 @@ stacks: security: (#StackBuilder & {
 			"local-ca": {
 				path: "stacks/security/components/local-ca"
 				annotations: description: "localhost mkcert certificate authority"
-			}
-			"cert-manager-promoter": {
-				path: "stacks/shared/components/addon-promoter"
-				annotations: description: "cert-manager kargo promotion stages"
-				parameters: {
-					kargoProject:  "cert-manager"
-					kargoStage:    "main"
-					kargoDataFile: certmanager.config.datafile
-					kargoDataKey:  "chart.version"
-					gitRepoURL:    organization.repoURL
-					chartName:     certmanager.config.chart.name
-					chartRepoURL:  certmanager.config.chart.repository.url
-				}
 			}
 		}
 	}

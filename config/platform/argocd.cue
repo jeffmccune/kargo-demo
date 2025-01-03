@@ -1,13 +1,26 @@
 @extern(embed)
 package platform
 
-import "holos.example/config/kargo"
+import (
+	"holos.example/config/kargo"
+	"holos.example/types/platform"
+)
 
 stacks: argocd: (#StackBuilder & {
+	(#PromoterBuilder & {parameters: {
+		name: "kargo"
+		config: {
+			datafile: kargo.config.datafile
+			chart: name: "kargo"
+			// We use the chart name because this is an oci:// chart with the image
+			// uri as the chart name.
+			chart: repository: url: kargo.config.chart.name
+		}
+	}}).promoter
+
 	stack: {
 		namespaces: {
-			argocd: _
-			kargo: metadata: labels: "kargo.akuity.io/project": "true"
+			argocd:          _
 			"argo-rollouts": _
 		}
 	}
@@ -48,19 +61,6 @@ stacks: argocd: (#StackBuilder & {
 			"kargo": {
 				path: "stacks/argocd/components/kargo"
 				annotations: description: "kargo controllers and crds"
-			}
-			"kargo-promoter": {
-				name: "kargo-promoter"
-				path: "stacks/shared/components/addon-promoter"
-				parameters: {
-					kargoProject:  "kargo"
-					kargoStage:    "main"
-					kargoDataFile: kargo.config.datafile
-					kargoDataKey:  "chart.version"
-					gitRepoURL:    organization.repoURL
-					chartName:     "kargo"
-					chartRepoURL:  kargo.config.chart.name
-				}
 			}
 		}
 	}

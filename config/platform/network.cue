@@ -1,12 +1,18 @@
 package platform
 
-import (
-	pkg_istio "holos.example/config/istio"
-)
+import pkg_istio "holos.example/config/istio"
 
 stacks: network: (#StackBuilder & {
+	(#PromoterBuilder & {parameters: {
+		name: "istio"
+		config: {
+			datafile: pkg_istio.config.datafile
+			chart: name:       "base"
+			chart: repository: pkg_istio.config.chart.repository
+		}
+	}}).promoter
+
 	stack: namespaces: {
-		istio: metadata: labels: "kargo.akuity.io/project": "true"
 		(pkg_istio.config.gateway.namespace): _
 		(pkg_istio.config.system.namespace):  _
 	}
@@ -41,19 +47,6 @@ stacks: network: (#StackBuilder & {
 				name: "istio-gateway"
 				path: "stacks/network/components/istio-gateway"
 				annotations: description: "istio ingress gateway"
-			}
-			"istio-promoter": {
-				name: "istio-promoter"
-				path: "stacks/shared/components/addon-promoter"
-				parameters: {
-					kargoProject:  "istio"
-					kargoStage:    "main"
-					kargoDataFile: pkg_istio.config.datafile
-					kargoDataKey:  "chart.version"
-					gitRepoURL:    organization.repoURL
-					chartName:     "base"
-					chartRepoURL:  pkg_istio.config.chart.repository.url
-				}
 			}
 			"httproutes": {
 				name: "httproutes"

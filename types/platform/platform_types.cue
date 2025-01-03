@@ -44,12 +44,30 @@ import (
 	metadata: name: NAME
 }
 
-// #StackBuilder builds a stack from parameters.
+// #StackBuilder builds a #Stack in the stack file from parameters.  Useful to
+// build and configure stacks consistently.
 #StackBuilder: {
 	parameters: {
-		organization: #Organization
+		name:       #Name
+		components: #Components
 	}
-	stack: #Stack
+	stack: #Stack & {
+		metadata: name: parameters.name
+		let STACK_NAME = metadata.name
+
+		for KEY, COMPONENT in parameters.components {
+			components: "stacks:\(STACK_NAME):components:\(KEY)": COMPONENT & {
+				name: KEY
+				// Labels to select specific stacks when rendering.
+				labels: "holos.run/stack.name":     STACK_NAME
+				labels: "holos.run/component.name": name
+				// Pass the stack name as a parameter for use with componentconfig.argocd.cue
+				parameters: stack: STACK_NAME
+				// Configure how the holos cli displays the rendered ... in ... log lines.
+				annotations: "app.holos.run/description": "\(name) for stack \(STACK_NAME)"
+			}
+		}
+	}
 }
 
 // #Component represents a Holos component.
