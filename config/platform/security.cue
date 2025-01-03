@@ -1,9 +1,6 @@
 package platform
 
-import (
-	"holos.example/config/externalsecrets"
-	"holos.example/config/certmanager"
-)
+import "holos.example/config/certmanager"
 
 stacks: security: (#StackBuilder & {
 	(#PromoterBuilder & {parameters: {
@@ -13,13 +10,9 @@ stacks: security: (#StackBuilder & {
 			chart:    certmanager.config.chart
 		}
 	}}).promoter
-	(#PromoterBuilder & {parameters: {
-		name: "external-secrets"
-		config: {
-			datafile: externalsecrets.config.datafile
-			chart:    externalsecrets.config.chart
-		}
-	}}).promoter
+
+	// Manage the external-secrets namespace.
+	stack: namespaces: "external-secrets": _
 
 	parameters: {
 		name: "security"
