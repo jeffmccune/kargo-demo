@@ -29,6 +29,18 @@ import (
 	repoURL: string
 }
 
+#Cluster: {
+	metadata: name: #Name
+	tier: "prod" | "nonprod"
+	// components represents platform components configured on each cluster,
+	// distinct from workload components.
+	components: #Components
+	// versions represents platform component versions to configure on each
+	// cluster.
+	versions: [string]: string
+}
+#Clusters: [NAME=string]: #Cluster & {metadata: name: NAME}
+
 // #Stack represents a software stack, a collection of components configured to
 // work together.
 #Stack: {
@@ -37,6 +49,8 @@ import (
 	components: #Components
 	// optional namespaces for the namespaces component
 	namespaces?: #Namespaces
+	// optional clusters to deploy this stack on.
+	clusters?: #Clusters
 }
 
 // #Stacks represents a collection of software stacks organized by name.

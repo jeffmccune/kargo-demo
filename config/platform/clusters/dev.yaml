@@ -1,0 +1,5 @@
+metadata:
+  name: dev
+tier: nonprod
+versions:
+  external-secrets: 0.12.1
